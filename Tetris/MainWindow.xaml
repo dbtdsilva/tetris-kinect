@@ -1,16 +1,27 @@
 ﻿<Window x:Class="Tetris.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" ResizeMode="NoResize" IsEnabled="True" 
-        WindowState="Maximized" 
-        WindowStyle="None" 
-        Width="1366" 
+        Title="MainWindow" IsEnabled="True" 
+        Width="1366"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        WindowStyle="None"
         Height="768" KeyDown="onKeyDown">
+    <!--="NoResize" WindowState="Maximized" 
+        WindowStyle="None" -->
     <Grid>
         <Grid HorizontalAlignment="Center" Background="White" Margin="0,56" Name="MainGrid" Width="350">
             <Border BorderBrush="Black" BorderThickness="0.5"></Border>
             <UniformGrid Name="TetrisGridBack"/>
             <UniformGrid Name="TetrisGrid" />
         </Grid>
+        <Button Content="Pause" Height="81" HorizontalAlignment="Left" Margin="1173,56,0,0" Name="PauseButton" VerticalAlignment="Top" Width="115" Click="PauseButton_Click" />
+        <Label Content="TimeSpan" Height="50" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Margin="611,8,611,0" />
+        <Grid Height="100" HorizontalAlignment="Center" Background="WhiteSmoke" Name="GridNext" VerticalAlignment="Top" Width="112" Margin="852,56,380,0" >
+            <Border BorderBrush="Black" BorderThickness="0.5"/>
+            <UniformGrid Name="NextBlockBackground" />
+            <UniformGrid Name="NextBlockGrid" />
+        </Grid>
+        <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="852,23,380,0" Name="label1" VerticalAlignment="Top" />
     </Grid>
 </Window>

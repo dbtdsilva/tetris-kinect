@@ -17,6 +17,7 @@ namespace Tetris
     public partial class MainWindow : Window
     {
         private Rectangle[,] tetrisTable;
+        private Rectangle[,] nextBlockTable;
         private TetrisM tetris = TetrisM.getInstance();
 
         public MainWindow()
@@ -32,9 +33,19 @@ namespace Tetris
             tetris.tableChanged += new TetrisM.TableChangedEventHandler(tableChanged);
             /* Event is called when a row gets completed */
             tetris.rowComplete += new TetrisM.RowCompleteEventHandler(rowCompleteEvent);
+            /* Refresh clock */
+            tetris.clockTick += new TetrisM.ClockTickEventHandler(clockTick);
+            /* Event is called when game ends (time out or game over) */
+            tetris.gameEnd += new TetrisM.GameEndEventHandler(gameEnded);
+            /* Event is called when next block changes */
+            tetris.nextBlockChanged += new TetrisM.NextBlockChangedEventHandler(nextBlockChanged);
 
             paintGrid();
             tetris.startGame();
+        }
+        public void clockTick(TimeSpan cTime)
+        {
+            TimeLeft.Content = String.Format("{0:m\\:ss}", cTime);
         }
         public void blockMovedEvent(Block currentBlock)
         {
@@ -84,6 +95,24 @@ namespace Tetris
                     });
                 }
             }
+
+            GridNext.Background = new SolidColorBrush(Colors.Black);
+            nextBlockTable = new Rectangle[4, 4];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    nextBlockTable[j, i] = new Rectangle();
+                    nextBlockTable[j, i].Margin = new Thickness(0.5);
+                    NextBlockGrid.Children.Add(nextBlockTable[j, i]);
+
+                    NextBlockBackground.Children.Add(new Rectangle
+                    {
+                        Fill = new SolidColorBrush(Colors.WhiteSmoke),
+                        Margin = new Thickness(1)
+                    });
+                }
+            }
         }
         private void paintGrid()
         {
@@ -101,13 +130,13 @@ namespace Tetris
             switch (e.Key)
             {
                 case Key.Down:
-                    tetris.moveCurrentBlock(TetrisM.MovePosition.DOWN); break;
+                    tetris.moveCurrentBlock(TetrisM.Actions.DOWN); break;
                 case Key.Left:
-                    tetris.moveCurrentBlock(TetrisM.MovePosition.LEFT); break;
+                    tetris.moveCurrentBlock(TetrisM.Actions.LEFT); break;
                 case Key.Right:
-                    tetris.moveCurrentBlock(TetrisM.MovePosition.RIGHT); break;
+                    tetris.moveCurrentBlock(TetrisM.Actions.RIGHT); break;
                 case Key.Up:
-                    tetris.moveCurrentBlock(TetrisM.MovePosition.ROTATE); break;
+                    tetris.moveCurrentBlock(TetrisM.Actions.ROTATE); break;
                 default:
                     return;
             }
@@ -117,6 +146,33 @@ namespace Tetris
         }
         public void tableChanged() {
             paintGrid();
+        }
+
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void nextBlockChanged(Block nextBlock)
+        {
+            Point2D[] list = nextBlock.getList();
+            Color c = nextBlock.getColor();
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    nextBlockTable[i, j].Fill = new SolidColorBrush(Colors.Transparent);
+                }
+            }
+            for (int i = 0; i < list.Length; i++)
+            {
+                nextBlockTable[list[i].X + 1, list[i].Y + 2].Fill = new SolidColorBrush(c);
+            }
+        }
+
+        public void gameEnded()
+        {
+            MessageBox.Show("~ Game Over ~");
+            this.Close();
         }
     }
 }

@@ -9,34 +9,49 @@ using System.Windows.Threading;
 
 namespace Tetris.TetrisModule
 {
-    class TetrisM /* Implementing Tetris class as a singleton */
+    class TetrisM       /* Implementing Tetris class as a singleton */
     {
+        /*** Events related with game actions/changes ***/
         public delegate void TableChangedEventHandler();
         public event TableChangedEventHandler tableChanged;
         public delegate void BlockMovedEventHandler(Block currentBlock);
         public event BlockMovedEventHandler blockMoved;
         public delegate void BlockRepaintEventHandler(Block currentBlock);
         public event BlockRepaintEventHandler blockPaint;
+        public delegate void NextBlockChangedEventHandler(Block nextBlock);
+        public event NextBlockChangedEventHandler nextBlockChanged;
         public delegate void RowCompleteEventHandler(int row);
         public event RowCompleteEventHandler rowComplete;
+        public delegate void ClockTickEventHandler(TimeSpan currentTime);
+        public event ClockTickEventHandler clockTick;
+        public delegate void GameEndEventHandler();
+        public event GameEndEventHandler gameEnd;
 
-        public static int NR = 20;
-        public static int NC = 10;
-        public static Color emptyBlock = Colors.Transparent;
-        public enum MovePosition { LEFT, DOWN, RIGHT, ROTATE };
+        /*** Public stats related with the game */
+        public static int NR = 20;                                  /* Number of rows */
+        public static int NC = 10;                                  /* Number of columns */
+        public static Color emptyBlock = Colors.Transparent;        /* Default color */
+        public enum Actions { LEFT, DOWN, RIGHT, ROTATE };     /* Available actions */
         
-        private static TetrisM instance;
+        private static TetrisM instance;    /* Private and static instance -> Singleton implementation */
 
-        DispatcherTimer slideTimer;
-        private Block nextBlock;
-        private Block currentBlock;
-        private Color[,] table;
+        private DispatcherTimer slideTimer;     /* Timer to make block go down after a certain amount of time */
+        private DispatcherTimer timeOut;        /* Timer to control a Tetris game (2 minutes default) */
+        private TimeSpan secondsLeft;           /* Temporary TimeSpan to control the time left */
+        private Block nextBlock;                /* Next block that will appear */
+        private Block currentBlock;             /* Current block on the table */
+        private Color[,] table;                 /* Tetris table */
 
         private TetrisM()
         {
             slideTimer = new DispatcherTimer();
             slideTimer.Tick += new EventHandler(onTimedEvent);
             slideTimer.Interval = TimeSpan.FromMilliseconds(750);
+
+            timeOut = new DispatcherTimer();
+            timeOut.Tick += new EventHandler(onTimeOut);
+            timeOut.Interval = TimeSpan.FromSeconds(1);
+            /* Time out function with a interval of 1 second to update visual effects */
 
             table = new Color[NC, NR];
         }
@@ -47,6 +62,51 @@ namespace Tetris.TetrisModule
                 instance = new TetrisM();
             }
             return instance;
+        }
+        public void startGame()
+        {
+            currentBlock = BlockFactory.generateBlock();
+            nextBlock = BlockFactory.generateBlock();
+            if (nextBlockChanged != null) nextBlockChanged(nextBlock);
+
+            clearTable();
+            if (blockPaint != null) blockPaint(currentBlock);
+            secondsLeft = new TimeSpan(0, 2, 0);
+            if (clockTick != null) clockTick(secondsLeft);
+            slideTimer.Start();
+            timeOut.Start();
+        }
+        public void moveCurrentBlock(Actions e)
+        {
+            if (checkCollisions(e))
+            {
+                if (e == Actions.DOWN)
+                    newBlock();
+                return;
+            }
+
+            if (blockMoved != null) blockMoved(currentBlock);
+
+            if (e == Actions.DOWN)
+            {
+                currentBlock.moveDown();
+                slideTimer.Stop();
+                slideTimer.Start();
+            }
+            else if (e == Actions.LEFT)
+                currentBlock.moveLeft();
+            else if (e == Actions.RIGHT)
+                currentBlock.moveRight();
+            else
+                currentBlock.rotate();
+
+            if (blockPaint != null) blockPaint(currentBlock);
+        }
+        public static bool validPos(int x, int y)
+        {
+            if (x >= NC || x < 0 || y >= NR || y < 0)
+                return false;
+            return true;
         }
         private void newBlock()
         {
@@ -59,10 +119,20 @@ namespace Tetris.TetrisModule
             }
 
             currentBlock = nextBlock;
+            /* Check if there's collision right before block appears, it means a game over */
+            Point2D[] list = currentBlock.getList();
+            Point2D pos = currentBlock.getPosition();
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (validPos(list[i].X + pos.X, list[i].Y + pos.Y) &&
+                    table[list[i].X + pos.X, list[i].Y + pos.Y] != emptyBlock)
+                {
+                    if (gameEnd != null) gameEnd();
+                }
+            }
             nextBlock = BlockFactory.generateBlock();
-
-            if (blockPaint != null) 
-                blockPaint(currentBlock);
+            if (nextBlockChanged != null) nextBlockChanged(nextBlock);
+            if (blockPaint != null) blockPaint(currentBlock);
         }
 
         private int checkForLinesComplete()
@@ -81,7 +151,7 @@ namespace Tetris.TetrisModule
             }
             return -1;
         }
-        public void clearTable()
+        private void clearTable()
         {
             for (int i = 0; i < NC; i++)
             {
@@ -91,16 +161,6 @@ namespace Tetris.TetrisModule
                 }
             }
             if (tableChanged != null) tableChanged();
-        }
-        public void startGame()
-        {
-            currentBlock = BlockFactory.generateBlock();
-            nextBlock = BlockFactory.generateBlock();
-
-            clearTable();
-            if (blockPaint != null) blockPaint(currentBlock);
-
-            slideTimer.Start();
         }
         private void fillTableWithBlock()
         {
@@ -116,41 +176,14 @@ namespace Tetris.TetrisModule
         {
             return table;
         }
-        public void moveCurrentBlock(MovePosition e)
-        {
-            if (checkCollisions(e))
-            {
-                if (e == MovePosition.DOWN)
-                    newBlock();
-                return;
-            }
-
-            if (blockMoved != null) blockMoved(currentBlock);
-
-            if (e == MovePosition.DOWN)
-            {
-                currentBlock.moveDown();
-                slideTimer.Stop();
-                slideTimer.Start();
-            }
-            else if (e == MovePosition.LEFT)
-                currentBlock.moveLeft();
-            else if (e == MovePosition.RIGHT)
-                currentBlock.moveRight();
-            else
-                currentBlock.rotate();
-
-            if (blockPaint != null) blockPaint(currentBlock);
-        }
-
-        public bool checkCollisions(MovePosition direction)
+        private bool checkCollisions(Actions direction)
         {
             Point2D [] list = currentBlock.getList();
             Point2D pos = currentBlock.getPosition();
             int x, y;
             switch (direction)
             {
-                case MovePosition.DOWN:
+                case Actions.DOWN:
                     for (int i = 0; i < list.Length; i++)
                     {
                         x = list[i].X + pos.X;
@@ -162,7 +195,7 @@ namespace Tetris.TetrisModule
                     }
                     break;
 
-                case MovePosition.LEFT:
+                case Actions.LEFT:
                     for (int i = 0; i < list.Length; i++)
                     {
                         x = list[i].X + pos.X - 1;
@@ -175,7 +208,7 @@ namespace Tetris.TetrisModule
                     }
                     break;
 
-                case MovePosition.RIGHT:
+                case Actions.RIGHT:
                     for (int i = 0; i < list.Length; i++)
                     {
                         x = list[i].X + pos.X + 1;
@@ -186,7 +219,7 @@ namespace Tetris.TetrisModule
                             return true;
                     }
                     break;
-                case MovePosition.ROTATE:
+                case Actions.ROTATE:
                     Point2D[] preview = currentBlock.rotatePreviewList();
                     int collidePos = 0;
                     for (int i = 0; i < preview.Length; i++)
@@ -212,10 +245,10 @@ namespace Tetris.TetrisModule
                     {
                         if (collidePos > 0) {
                             collidePos--;
-                            moveCurrentBlock(MovePosition.RIGHT);
+                            moveCurrentBlock(Actions.RIGHT);
                         } else {
                             collidePos++;
-                            moveCurrentBlock(MovePosition.LEFT);
+                            moveCurrentBlock(Actions.LEFT);
                         }
                     }
                         
@@ -241,14 +274,22 @@ namespace Tetris.TetrisModule
         }
         private void onTimedEvent(object sender, EventArgs e)
         {
-            moveCurrentBlock(TetrisM.MovePosition.DOWN);
+            moveCurrentBlock(TetrisM.Actions.DOWN);
         }
 
-        public static bool validPos(int x, int y)
+        private void onTimeOut(object sender, EventArgs e)
         {
-            if (x >= NC || x < 0 || y >= NR || y < 0)
-                return false;
-            return true;
+            secondsLeft = secondsLeft.Subtract(TimeSpan.FromSeconds(1));
+            if (clockTick != null) clockTick(secondsLeft);
+
+            if (secondsLeft.TotalSeconds == 0)
+                gameFinished();
+        }
+        private void gameFinished()
+        {
+            timeOut.Stop();
+            slideTimer.Stop();
+            if (gameEnd != null) gameEnd();
         }
     }
 }
