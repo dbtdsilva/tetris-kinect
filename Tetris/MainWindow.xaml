@@ -1,15 +1,24 @@
 ﻿<Window x:Class="Tetris.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:k="http://schemas.microsoft.com/kinect/2013"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         Title="MainWindow" IsEnabled="True" 
-        Width="1366"
+        Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}"
+        Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}" 
         ResizeMode="NoResize"
         WindowState="Maximized"
         WindowStyle="None"
-        Height="768" KeyDown="onKeyDown">
+        KeyDown="onKeyDown">
     <!--="NoResize" WindowState="Maximized" 
         WindowStyle="None" -->
     <Grid>
+        <Grid Grid.Row="0"  Margin="10 0 10 20">
+            <Image HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="None" Margin="0 0 0 4"/>
+            <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            <k:KinectSensorChooserUI HorizontalAlignment="Left" VerticalAlignment="Top" Name="sensorChooserUi" />
+        </Grid>
+        
         <Grid HorizontalAlignment="Center" Background="White" Margin="0,56" Name="MainGrid" Width="350">
             <Border BorderBrush="Black" BorderThickness="0.5"></Border>
             <UniformGrid Name="TetrisGridBack"/>
@@ -23,5 +32,6 @@
             <UniformGrid Name="NextBlockGrid" />
         </Grid>
         <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="852,23,380,0" Name="label1" VerticalAlignment="Top" />
+        <k:KinectRegion Grid.Row="1" x:Name="kinectRegion"/>
     </Grid>
 </Window>

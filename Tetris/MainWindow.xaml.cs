@@ -10,7 +10,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Kinect.Toolkit.Controls;
 using Tetris.TetrisModule;
+using Tetris.Pages;
 
 namespace Tetris
 {
@@ -20,27 +24,32 @@ namespace Tetris
         private Rectangle[,] nextBlockTable;
         private TetrisM tetris = TetrisM.getInstance();
 
+        private readonly KinectSensorChooser sensorChooser;
+
         public MainWindow()
         {
             InitializeComponent();
-            createGrid();
 
-            /* Block paint means that needs to be painted */
+            // Initialize the sensor chooser and UI
+            this.sensorChooser = new KinectSensorChooser();
+            this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
+            this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
+            this.sensorChooser.Start();
+
+            // Bind the sensor chooser's current sensor to the KinectRegion
+            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
+            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+
+            // Events related with Tetris Module
             tetris.blockPaint += new TetrisM.BlockRepaintEventHandler(blockPaintEvent);
-            /* Block moved means that needs to be cleared */
             tetris.blockMoved += new TetrisM.BlockMovedEventHandler(blockMovedEvent);
-            /* Table change means that needs a total repaint */
             tetris.tableChanged += new TetrisM.TableChangedEventHandler(tableChanged);
-            /* Event is called when a row gets completed */
             tetris.rowComplete += new TetrisM.RowCompleteEventHandler(rowCompleteEvent);
-            /* Refresh clock */
             tetris.clockTick += new TetrisM.ClockTickEventHandler(clockTick);
-            /* Event is called when game ends (time out or game over) */
             tetris.gameEnd += new TetrisM.GameEndEventHandler(gameEnded);
-            /* Event is called when next block changes */
             tetris.nextBlockChanged += new TetrisM.NextBlockChangedEventHandler(nextBlockChanged);
 
-            paintGrid();
+            createGrid();
             tetris.startGame();
         }
         public void clockTick(TimeSpan cTime)
@@ -147,11 +156,6 @@ namespace Tetris
         public void tableChanged() {
             paintGrid();
         }
-
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
         private void nextBlockChanged(Block nextBlock)
         {
             Point2D[] list = nextBlock.getList();
@@ -171,8 +175,60 @@ namespace Tetris
 
         public void gameEnded()
         {
-            MessageBox.Show("~ Game Over ~");
-            this.Close();
+            GameOver gameover = new GameOver();
+            gameover.Owner = this;
+            gameover.ShowDialog();
+        }
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            tetris.pausePlay();
+            Pause pause = new Pause();
+            pause.ShowDialog();
+        }
+
+        private static void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)
+        {
+            if (args.OldSensor != null)
+            {
+                try
+                {
+                    args.OldSensor.DepthStream.Range = DepthRange.Default;
+                    args.OldSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    args.OldSensor.DepthStream.Disable();
+                    args.OldSensor.SkeletonStream.Disable();
+                }
+                catch (InvalidOperationException)
+                {
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+            }
+
+            if (args.NewSensor != null)
+            {
+                try
+                {
+                    args.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
+                    args.NewSensor.SkeletonStream.Enable();
+
+                    try
+                    {
+                        args.NewSensor.DepthStream.Range = DepthRange.Near;
+                        args.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // Non Kinect for Windows devices do not support Near mode, so reset back to default mode.
+                        args.NewSensor.DepthStream.Range = DepthRange.Default;
+                        args.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+            }
         }
     }
 }

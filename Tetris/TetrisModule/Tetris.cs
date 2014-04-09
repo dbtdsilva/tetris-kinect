@@ -41,6 +41,7 @@ namespace Tetris.TetrisModule
         private Block nextBlock;                /* Next block that will appear */
         private Block currentBlock;             /* Current block on the table */
         private Color[,] table;                 /* Tetris table */
+        private bool paused;
 
         private TetrisM()
         {
@@ -65,19 +66,37 @@ namespace Tetris.TetrisModule
         }
         public void startGame()
         {
+            paused = false;
             currentBlock = BlockFactory.generateBlock();
             nextBlock = BlockFactory.generateBlock();
             if (nextBlockChanged != null) nextBlockChanged(nextBlock);
 
             clearTable();
+            if (tableChanged != null) tableChanged();
             if (blockPaint != null) blockPaint(currentBlock);
             secondsLeft = new TimeSpan(0, 2, 0);
             if (clockTick != null) clockTick(secondsLeft);
             slideTimer.Start();
             timeOut.Start();
         }
+        public void pausePlay()
+        {
+            paused = !paused;
+            if (paused)
+            {
+                timeOut.Stop();
+                slideTimer.Stop();
+            }
+            else
+            {
+                timeOut.Start();
+                slideTimer.Start();
+            }
+        }
         public void moveCurrentBlock(Actions e)
         {
+            if (paused) return;
+
             if (checkCollisions(e))
             {
                 if (e == Actions.DOWN)
@@ -90,7 +109,7 @@ namespace Tetris.TetrisModule
             if (e == Actions.DOWN)
             {
                 currentBlock.moveDown();
-                slideTimer.Stop();
+                slideTimer.Stop();              /* Reset timer */
                 slideTimer.Start();
             }
             else if (e == Actions.LEFT)
@@ -127,7 +146,8 @@ namespace Tetris.TetrisModule
                 if (validPos(list[i].X + pos.X, list[i].Y + pos.Y) &&
                     table[list[i].X + pos.X, list[i].Y + pos.Y] != emptyBlock)
                 {
-                    if (gameEnd != null) gameEnd();
+                    gameFinished();
+                    return;
                 }
             }
             nextBlock = BlockFactory.generateBlock();
@@ -289,6 +309,8 @@ namespace Tetris.TetrisModule
         {
             timeOut.Stop();
             slideTimer.Stop();
+            paused = true;
+
             if (gameEnd != null) gameEnd();
         }
     }

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tetris.TetrisModule;
 
 namespace Tetris.Pages
 {
@@ -21,6 +22,11 @@ namespace Tetris.Pages
         public GameOver()
         {
             InitializeComponent();
+        }
+
+        private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TetrisM.getInstance().startGame();
         }
     }
 }

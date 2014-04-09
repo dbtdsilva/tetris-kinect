@@ -10,17 +10,31 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tetris.TetrisModule;
 
 namespace Tetris.Pages
 {
-    /// <summary>
-    /// Interaction logic for gameover.xaml
-    /// </summary>
     public partial class Pause : Window
     {
         public Pause()
         {
             InitializeComponent();
+        }
+
+        private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TetrisM.getInstance().pausePlay();
+        }
+
+        private void resumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void restartButton_Click(object sender, RoutedEventArgs e)
+        {
+            TetrisM.getInstance().startGame();
+            this.Close();
         }
     }
 }
