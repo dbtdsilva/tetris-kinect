@@ -12,26 +12,28 @@
         KeyDown="onKeyDown">
     <!--="NoResize" WindowState="Maximized" 
         WindowStyle="None" -->
-    <Grid>
-        <Grid Grid.Row="0"  Margin="10 0 10 20">
-            <Image HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="None" Margin="0 0 0 4"/>
-            <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
-            <k:KinectSensorChooserUI HorizontalAlignment="Left" VerticalAlignment="Top" Name="sensorChooserUi" />
-        </Grid>
+
+    <k:KinectRegion x:Name="kinectRegion">
+        <Grid Background="White" k:KinectRegion.HandPointerGrip="HandPointerGrip" k:KinectRegion.HandPointerMove="HandPointerMove">
+            <Grid Margin="10 0 10 20">
+                <Image HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="None" Margin="0 0 0 4"/>
+                <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="200" Margin="20,20" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <k:KinectSensorChooserUI HorizontalAlignment="Left" VerticalAlignment="Top" Name="sensorChooserUi" />
+            </Grid>
         
-        <Grid HorizontalAlignment="Center" Background="White" Margin="0,56" Name="MainGrid" Width="350">
-            <Border BorderBrush="Black" BorderThickness="0.5"></Border>
-            <UniformGrid Name="TetrisGridBack"/>
-            <UniformGrid Name="TetrisGrid" />
+            <Grid HorizontalAlignment="Center" Background="White" Margin="0,56" Name="MainGrid" Width="350">
+                <Border BorderBrush="Black" BorderThickness="0.5"></Border>
+                <UniformGrid Name="TetrisGridBack"/>
+                <UniformGrid Name="TetrisGrid" />
+            </Grid>
+            <k:KinectTileButton Content="Pause" Height="250" Width="250" HorizontalAlignment="Right" Margin="25,25" Name="PauseButton" VerticalAlignment="Top" k:KinectTileButton.Click="PauseButton_Click" Foreground="White" BorderThickness="2"></k:KinectTileButton>
+            <Label Content="TimeSpan" Height="50" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Margin="611,8,611,0" />
+            <Grid Height="100" HorizontalAlignment="Center" Background="WhiteSmoke" Name="GridNext" VerticalAlignment="Top" Width="112" Margin="852,56,380,0" >
+                <Border BorderBrush="Black" BorderThickness="0.5"/>
+                <UniformGrid Name="NextBlockBackground" />
+                <UniformGrid Name="NextBlockGrid" />
+            </Grid>
+            <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="852,23,380,0" Name="nextblock_label" VerticalAlignment="Top" />
         </Grid>
-        <Button Content="Pause" Height="81" HorizontalAlignment="Left" Margin="1173,56,0,0" Name="PauseButton" VerticalAlignment="Top" Width="115" Click="PauseButton_Click" />
-        <Label Content="TimeSpan" Height="50" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Margin="611,8,611,0" />
-        <Grid Height="100" HorizontalAlignment="Center" Background="WhiteSmoke" Name="GridNext" VerticalAlignment="Top" Width="112" Margin="852,56,380,0" >
-            <Border BorderBrush="Black" BorderThickness="0.5"/>
-            <UniformGrid Name="NextBlockBackground" />
-            <UniformGrid Name="NextBlockGrid" />
-        </Grid>
-        <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="852,23,380,0" Name="label1" VerticalAlignment="Top" />
-        <k:KinectRegion Grid.Row="1" x:Name="kinectRegion"/>
-    </Grid>
+    </k:KinectRegion>
 </Window>

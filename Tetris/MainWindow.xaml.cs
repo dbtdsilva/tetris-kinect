@@ -23,7 +23,7 @@ namespace Tetris
         private Rectangle[,] tetrisTable;
         private Rectangle[,] nextBlockTable;
         private TetrisM tetris = TetrisM.getInstance();
-
+        private bool tickedEnd = true;
         private readonly KinectSensorChooser sensorChooser;
 
         public MainWindow()
@@ -185,7 +185,41 @@ namespace Tetris
             Pause pause = new Pause();
             pause.ShowDialog();
         }
-
+        private void HandPointerGrip(object sender, HandPointerEventArgs args)
+        {
+            tetris.moveCurrentBlock(TetrisM.Actions.ROTATE);
+        }
+        private void HandPointerMove(object sender, HandPointerEventArgs e)
+        {
+            Point pos = e.HandPointer.GetPosition(this);
+            
+            int newpos = (int) (pos.X / (ActualWidth / TetrisM.NC));
+            int currentPos = tetris.getCurrentBlock().getPosition().X;
+            if (newpos != currentPos) {
+                if (newpos > currentPos)
+                {
+                    for (int i = 0; i < (newpos - currentPos); i++)
+                    {
+                        tetris.moveCurrentBlock(TetrisM.Actions.RIGHT);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < (currentPos - newpos); i++)
+                    {
+                        tetris.moveCurrentBlock(TetrisM.Actions.LEFT);
+                    }
+                }
+                currentPos = newpos;
+            }
+            if (pos.Y > 700 && !tickedEnd)
+            {
+                tickedEnd = true;
+                tetris.moveCurrentBlock(TetrisM.Actions.F_DOWN);
+            }
+            if (pos.Y < 400)
+                tickedEnd = false;
+        }
         private static void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)
         {
             if (args.OldSensor != null)

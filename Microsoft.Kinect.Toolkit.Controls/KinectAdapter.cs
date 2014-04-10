@@ -52,8 +52,8 @@ namespace Microsoft.Kinect.Toolkit.Controls
         /// </param>
         public static void InteractionZoneToUserInterface(double izX, double izY, double userInterfaceWidth, double userInterfaceHeight, out double uiX, out double uiY)
         {
-            uiX = userInterfaceWidth * izX;
-            uiY = userInterfaceHeight * izY;
+            uiX = (userInterfaceWidth * izX) * 1;
+            uiY = (userInterfaceHeight * izY) * 1;
         }
 
         /// <summary>

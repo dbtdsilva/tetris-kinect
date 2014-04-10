@@ -31,7 +31,7 @@ namespace Tetris.TetrisModule
         public static int NR = 20;                                  /* Number of rows */
         public static int NC = 10;                                  /* Number of columns */
         public static Color emptyBlock = Colors.Transparent;        /* Default color */
-        public enum Actions { LEFT, DOWN, RIGHT, ROTATE };     /* Available actions */
+        public enum Actions { LEFT, DOWN, F_DOWN, RIGHT, ROTATE };     /* Available actions */
         
         private static TetrisM instance;    /* Private and static instance -> Singleton implementation */
 
@@ -106,7 +106,14 @@ namespace Tetris.TetrisModule
 
             if (blockMoved != null) blockMoved(currentBlock);
 
-            if (e == Actions.DOWN)
+            if (e == Actions.F_DOWN)
+            {
+                while (!checkCollisions(Actions.DOWN))
+                    moveCurrentBlock(Actions.DOWN);
+                newBlock();
+                return;
+            } 
+            else if (e == Actions.DOWN)
             {
                 currentBlock.moveDown();
                 slideTimer.Stop();              /* Reset timer */
@@ -120,6 +127,9 @@ namespace Tetris.TetrisModule
                 currentBlock.rotate();
 
             if (blockPaint != null) blockPaint(currentBlock);
+        }
+        public Block getCurrentBlock() {
+            return currentBlock;
         }
         public static bool validPos(int x, int y)
         {
