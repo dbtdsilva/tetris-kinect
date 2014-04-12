@@ -64,6 +64,8 @@
       <DependentUpon>GameOver.xaml</DependentUpon>
     </Compile>
     <Compile Include="TetrisModule\BlockFactory.cs" />
+    <Compile Include="TetrisModule\HighScore.cs" />
+    <Compile Include="TetrisModule\Score.cs" />
     <Compile Include="TetrisModule\SingularBlocks\BlockI.cs" />
     <Compile Include="TetrisModule\SingularBlocks\BlockJ.cs" />
     <Compile Include="TetrisModule\SingularBlocks\BlockL.cs" />

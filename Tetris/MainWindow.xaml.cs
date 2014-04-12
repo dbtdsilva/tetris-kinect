@@ -146,6 +146,8 @@ namespace Tetris
                     tetris.moveCurrentBlock(TetrisM.Actions.RIGHT); break;
                 case Key.Up:
                     tetris.moveCurrentBlock(TetrisM.Actions.ROTATE); break;
+                case Key.Space:
+                    tetris.moveCurrentBlock(TetrisM.Actions.F_DOWN); break;
                 default:
                     return;
             }
