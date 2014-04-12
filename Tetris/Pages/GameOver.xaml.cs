@@ -17,7 +17,7 @@ namespace Tetris.Pages
     /// <summary>
     /// Interaction logic for gameover.xaml
     /// </summary>
-    public partial class GameOver : Window
+    public partial class GameOver : Page
     {
         public GameOver()
         {

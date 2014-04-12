@@ -11,30 +11,45 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tetris.TetrisModule;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Kinect.Toolkit.Controls;
+using Microsoft.Kinect;
 
 namespace Tetris.Pages
 {
-    public partial class Pause : Window
+    public partial class Pause : Page
     {
+        private KinectSensorChooser sensorChooser;
         public Pause()
         {
             InitializeComponent();
         }
 
-        private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            TetrisM.getInstance().pausePlay();
-        }
-
         private void resumeButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            TetrisM.getInstance().pausePlay();
+            MainWindow.Instance.mainFrame.NavigationService.GoBack();
         }
 
         private void restartButton_Click(object sender, RoutedEventArgs e)
         {
             TetrisM.getInstance().startGame();
-            this.Close();
+            MainWindow.Instance.mainFrame.NavigationService.GoBack();
+        }
+
+        public void bindSensor(KinectSensorChooser sensorChooser)
+        {
+            this.sensorChooser = sensorChooser;
+            // Bind the sensor chooser's current sensor to the KinectRegion
+            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
+            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+            this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
+            this.sensorChooser.Start();
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Might be required to do something when unloading page
         }
     }
 }
