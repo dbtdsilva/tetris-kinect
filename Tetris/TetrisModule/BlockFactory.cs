@@ -13,14 +13,14 @@ namespace Tetris.TetrisModule
         static bool[] done = new bool[7];
         public static Block generateBlock()
         {
-            bool temp = false;
+            bool blockLeft = false;
             // Check if there is any block left to give
             for (int i = 0; i < done.Length; i++)
                 if (done[i] == false)
-                    temp = true;
+                    blockLeft = true;
 
             // If there is no block left, reset array
-            if (!temp)
+            if (!blockLeft)
                 for (int i = 0; i < done.Length; i++)
                     done[i] = false;
 
@@ -29,15 +29,16 @@ namespace Tetris.TetrisModule
                 value = new Random().Next(7);
             } while (done[value]);
 
+            done[value] = true;
             switch (value)
             {
-                case 0: done[0] = true; return new BlockI();
-                case 1: done[1] = true; return new BlockJ();
-                case 2: done[2] = true; return new BlockL();
-                case 3: done[3] = true; return new BlockO();
-                case 4: done[4] = true; return new BlockS();
-                case 5: done[5] = true; return new BlockT();
-                case 6: done[6] = true; return new BlockZ();
+                case 0: return new BlockI();
+                case 1: return new BlockJ();
+                case 2: return new BlockL();
+                case 3: return new BlockO();
+                case 4: return new BlockS();
+                case 5: return new BlockT();
+                case 6: return new BlockZ();
                 default: throw new NotImplementedException();
             }
         }
