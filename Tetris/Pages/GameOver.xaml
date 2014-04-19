@@ -4,9 +4,13 @@
         Title="GameOver" IsEnabled="True" 
         Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" 
         Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
-        Background="{x:Null}">
+        Background="{x:Null}" xmlns:k="http://schemas.microsoft.com/kinect/2013">
     <Grid>
-        <Grid Background="White" Margin="300,200,300,200">
+        <Grid Background="White" Margin="500,300">
+            <Label HorizontalAlignment="Center" Name="gameover_label" Content="Game Over" FontSize="36" />
+            <Label HorizontalAlignment="Center" Name="score" Content="0" FontSize="20" Width="192" Margin="228,70,36,30" />
+            <Label HorizontalAlignment="Center" Content="Score: " FontSize="20" Margin="-80,70,0,70" />
+            <k:KinectTileButton k:KinectTileButton.Click="RestartButton_Click"  Height="158" Width="158" Foreground="White" BorderThickness="4" Content="Restart" HorizontalAlignment="Center" Name="RestartButton" VerticalAlignment="Bottom" Margin="0,-79"/>
         </Grid>
     </Grid>
 </Page>

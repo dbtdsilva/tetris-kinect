@@ -57,6 +57,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\GameOverHighscore.xaml.cs">
+      <DependentUpon>GameOverHighscore.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageInterfaces\IMainPage.cs" />
+    <Compile Include="Pages\PageInterfaces\IPopup.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -66,16 +71,17 @@
     <Compile Include="Pages\GameOver.xaml.cs">
       <DependentUpon>GameOver.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TetrisModule\BlockFactory.cs" />
-    <Compile Include="TetrisModule\HighScore.cs" />
-    <Compile Include="TetrisModule\Score.cs" />
-    <Compile Include="TetrisModule\SingularBlocks\BlockI.cs" />
-    <Compile Include="TetrisModule\SingularBlocks\BlockJ.cs" />
-    <Compile Include="TetrisModule\SingularBlocks\BlockL.cs" />
-    <Compile Include="TetrisModule\SingularBlocks\BlockO.cs" />
-    <Compile Include="TetrisModule\SingularBlocks\BlockS.cs" />
-    <Compile Include="TetrisModule\SingularBlocks\BlockT.cs" />
-    <Compile Include="TetrisModule\SingularBlocks\BlockZ.cs" />
+    <Compile Include="TetrisModule\BlockModule\BlockFactory.cs" />
+    <Compile Include="TetrisModule\BlockModule\GhostBlock.cs" />
+    <Compile Include="TetrisModule\Score\HighScore.cs" />
+    <Compile Include="TetrisModule\Score\Score.cs" />
+    <Compile Include="TetrisModule\BlockModule\SingularBlocks\BlockI.cs" />
+    <Compile Include="TetrisModule\BlockModule\SingularBlocks\BlockJ.cs" />
+    <Compile Include="TetrisModule\BlockModule\SingularBlocks\BlockL.cs" />
+    <Compile Include="TetrisModule\BlockModule\SingularBlocks\BlockO.cs" />
+    <Compile Include="TetrisModule\BlockModule\SingularBlocks\BlockS.cs" />
+    <Compile Include="TetrisModule\BlockModule\SingularBlocks\BlockT.cs" />
+    <Compile Include="TetrisModule\BlockModule\SingularBlocks\BlockZ.cs" />
     <Compile Include="TetrisModule\Point2D.cs" />
     <Compile Include="TetrisModule\Tetris.cs" />
     <Page Include="MainWindow.xaml">
@@ -86,11 +92,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TetrisModule\Block.cs" />
+    <Compile Include="TetrisModule\BlockModule\Block.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\GameOverHighscore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +131,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

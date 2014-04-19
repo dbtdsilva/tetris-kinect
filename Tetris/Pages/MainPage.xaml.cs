@@ -11,16 +11,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Tetris.TetrisModule;
+using Tetris.TetrisModule.BlockModule;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using Microsoft.Kinect;
+using System.Data;
+using System.Collections;
 
 namespace Tetris.Pages
 {
     /// <summary>
     /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class MainPage : Page
+    public partial class MainPage : Page, IMainPage
     {
         private Rectangle[,] tetrisTable;
         private Rectangle[,] nextBlockTable;
@@ -50,15 +53,32 @@ namespace Tetris.Pages
             tetris.clockTick += new TetrisM.ClockTickEventHandler(clockTick);
             tetris.gameEnd += new TetrisM.GameEndEventHandler(gameEnded);
             tetris.nextBlockChanged += new TetrisM.NextBlockChangedEventHandler(nextBlockChanged);
+            tetris.scoreChanged += new TetrisM.ScoreChangedEventHandler(scoreChanged);
+            tetris.highscoreChanged += new TetrisM.HighscoresChangedEventHandler(highscoreChanged);
 
             createGrid();
+            if (tetris.loadHighscores())
+                highscoreChanged();
             tetris.startGame();
-        }
 
+        }
+        private void gridHighscores_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString() + ".";
+        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var window = MainWindow.GetWindow(this);
             window.KeyDown += new KeyEventHandler(onKeyDown);
+        }
+        private void highscoreChanged()
+        {
+            ArrayList list = new ArrayList();
+            Score[] arr = tetris.getHighscores().getArray();
+
+            for (int i = 0; i < tetris.getHighscores().Size; i++)
+                list.Add(arr[i]);
+            gridHighscores.ItemsSource = list;
         }
         public void clockTick(TimeSpan cTime)
         {
@@ -66,7 +86,7 @@ namespace Tetris.Pages
         }
         public void blockMovedEvent(Block currentBlock)
         {
-            Point2D [] list = currentBlock.getList();
+            Point2D[] list = currentBlock.getList();
             Point2D pos = currentBlock.getPosition();
             for (int i = 0; i < list.Length; i++)
             {
@@ -142,9 +162,11 @@ namespace Tetris.Pages
                 }
             }
         }
+        private void scoreChanged(int score) {
+            this.score.Content = score;
+        }
         private void onKeyDown(object sender, KeyEventArgs e)
         {
-            
             switch (e.Key)
             {
                 case Key.Down:
@@ -185,10 +207,18 @@ namespace Tetris.Pages
             }
         }
 
-        public void gameEnded()
+        public void gameEnded(int finalscore)
         {
-            GameOver gameover = new GameOver();
-            MainWindow.Instance.PopupWindow(gameover);
+            if (tetris.isHighscore(finalscore))
+            {
+                GameOverHighscore submitPanel = new GameOverHighscore(finalscore);
+                MainWindow.Instance.popPage(submitPanel);
+            }
+            else
+            {
+                GameOver gameover = new GameOver(finalscore);
+                MainWindow.Instance.popPage(gameover);
+            }
         }
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {

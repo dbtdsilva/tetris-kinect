@@ -7,6 +7,7 @@
         IsEnabled="True"
         Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" 
         Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
+        Closing="Window_Closing"
         >
     <Grid>
         <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden">

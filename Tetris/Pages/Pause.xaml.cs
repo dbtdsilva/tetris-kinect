@@ -17,7 +17,7 @@ using Microsoft.Kinect;
 
 namespace Tetris.Pages
 {
-    public partial class Pause : Page
+    public partial class Pause : Page, IMainPage
     {
         private KinectSensorChooser sensorChooser;
         public Pause()
@@ -28,13 +28,13 @@ namespace Tetris.Pages
         private void resumeButton_Click(object sender, RoutedEventArgs e)
         {
             TetrisM.getInstance().pausePlay();
-            MainWindow.Instance.mainFrame.NavigationService.GoBack();
+            MainWindow.Instance.restoreStart();
         }
 
         private void restartButton_Click(object sender, RoutedEventArgs e)
         {
             TetrisM.getInstance().startGame();
-            MainWindow.Instance.mainFrame.NavigationService.GoBack();
+            MainWindow.Instance.restoreStart();
         }
 
         public void bindSensor(KinectSensorChooser sensorChooser)
@@ -45,11 +45,6 @@ namespace Tetris.Pages
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
-        }
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            // Might be required to do something when unloading page
         }
     }
 }

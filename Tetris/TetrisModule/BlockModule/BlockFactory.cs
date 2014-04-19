@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Tetris.TetrisModule.SingularBlocks;
+using Tetris.TetrisModule.BlockModule.SingularBlocks;
 
-namespace Tetris.TetrisModule
+namespace Tetris.TetrisModule.BlockModule
 {
     class BlockFactory
     {

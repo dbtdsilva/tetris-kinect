@@ -1,0 +1,19 @@
+﻿<Page x:Class="Tetris.Pages.GameOverHighscore"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="GameOver" IsEnabled="True" 
+        Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" 
+        Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
+        Background="{x:Null}">
+    <Grid>
+        <Grid Background="White" Margin="300,200,300,200">
+            <Label HorizontalAlignment="Center" Name="gameover_label" Content="Game Over" FontSize="36" Margin="297,0,297,429" />
+            <Label HorizontalAlignment="Center" Content="New highscore!" FontSize="20" Margin="55" Width="145" />
+            <Label HorizontalAlignment="Center" Name="score" Content="0" FontSize="20" Margin="430,117,234,329" Width="192" />
+            <Label HorizontalAlignment="Center" Content="Score: " FontSize="20" Margin="356,117,432,329" />
+            <Label HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Nome" FontSize="20" Margin="80" />
+            <TextBox Height="23" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Margin="60" Name="submit_name" TabIndex="0"/>
+            <Button Content="Submit" Height="23" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" Name="submit_button" Width="75" Click="onSubmit" />
+        </Grid>
+    </Grid>
+</Page>

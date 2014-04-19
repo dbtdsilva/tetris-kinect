@@ -5,22 +5,29 @@ using System.Text;
 
 namespace Tetris.TetrisModule
 {
+    [Serializable()]
     class Score
     {
         private int points;
-        private String name;
+        private string name;
 
-        public Score(String name, int points)
+        public Score(string name, int points)
         {
             this.name = name;
             this.points = points;
         }
-        public int getPoints() {
-            return points;
-        }
-        public String getName()
+        public string Name
         {
-            return name;
+            get {
+                return name;
+            }
+        }
+        public int Points
+        {
+            get
+            {
+                return points;
+            }
         }
         public override string ToString()
         {

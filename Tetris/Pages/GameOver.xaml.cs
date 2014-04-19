@@ -17,15 +17,17 @@ namespace Tetris.Pages
     /// <summary>
     /// Interaction logic for gameover.xaml
     /// </summary>
-    public partial class GameOver : Page
+    public partial class GameOver : Page, IPopup
     {
-        public GameOver()
+        public GameOver(int finalscore)
         {
             InitializeComponent();
+            score.Content = finalscore;
         }
 
-        private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.Instance.exitPopup();
             TetrisM.getInstance().startGame();
         }
     }

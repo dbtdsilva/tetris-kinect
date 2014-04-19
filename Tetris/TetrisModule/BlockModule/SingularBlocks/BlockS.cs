@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows;
 
-namespace Tetris.TetrisModule.SingularBlocks
+namespace Tetris.TetrisModule.BlockModule.SingularBlocks
 {
     class BlockS : Block
     {

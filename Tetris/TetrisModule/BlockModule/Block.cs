@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows;
 
-namespace Tetris.TetrisModule
+namespace Tetris.TetrisModule.BlockModule
 {
-    public abstract class Block
+    public class Block
     {
         private Point2D pos;
         private Color blockColor;
@@ -19,8 +19,19 @@ namespace Tetris.TetrisModule
                 throw new InvalidOperationException("Each tetris block contains only 4 parts");
 
             pos = new Point2D((TetrisM.NC-1) / 2, 0);
-            this.list = list;
+            this.list = new Point2D[4];
+            for (int i = 0; i < list.Length; i++)
+                this.list[i] = new Point2D(list[i]);
+
             this.blockColor = blockColor;
+        }
+        public Block(Block block)
+        {
+            this.pos = block.pos;
+            this.blockColor = block.blockColor;
+            this.list = new Point2D[4];
+            for (int i = 0; i < list.Length; i++)
+                this.list[i] = new Point2D(list[i]);
         }
         public Point2D[] getList()
         {
@@ -33,6 +44,10 @@ namespace Tetris.TetrisModule
         public Point2D getPosition()
         {
             return pos;
+        }
+        public void setPosition(Point2D p)
+        {
+            pos = new Point2D(p);
         }
         virtual public void rotate()
         {

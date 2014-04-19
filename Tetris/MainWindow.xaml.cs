@@ -21,7 +21,7 @@ namespace Tetris
     public partial class MainWindow : Window
     {
         public static MainWindow Instance;
-        public MainPage mainpage;
+        private MainPage mainpage;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,16 +30,29 @@ namespace Tetris
             mainpage = new MainPage();
             this.mainFrame.Navigate(mainpage);
         }
-        public void PopupWindow(Page page)
+        public void changeFrame(IMainPage page)
+        {
+            this.mainFrame.Navigate(page);
+        }
+        public void restoreStart()
+        {
+            this.mainFrame.Navigate(mainpage);
+        }
+        public void popPage(IPopup page)
         {
             this.popupBackground.Visibility = Visibility.Visible;
             this.popupFrame.Navigate(page);
             this.popupFrame.Visibility = Visibility.Visible;
         }
-        public void ExitPopup()
+        public void exitPopup()
         {
             this.popupFrame.Visibility = Visibility.Collapsed;
             this.popupBackground.Visibility = Visibility.Collapsed;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TetrisM.getInstance().saveHighscores();
         }
     }
 }

@@ -5,22 +5,17 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows;
 
-namespace Tetris.TetrisModule.SingularBlocks
+namespace Tetris.TetrisModule.BlockModule.SingularBlocks
 {
-    class BlockO : Block
+    class BlockZ : Block
     {
-        public BlockO() : base(new Point2D[4] {
+        public BlockZ() : base(new Point2D[4] {
+                            new Point2D(-1,-1),
                             new Point2D(0,-1),
                             new Point2D(0,0),
-                            new Point2D(1,-1),
                             new Point2D(1,0)
-                        } , Colors.Yellow)
+                        }, Colors.Red)
         {
-        }
-
-        public override void rotate()
-        {
-            return;
         }
     }
 }

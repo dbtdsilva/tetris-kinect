@@ -5,16 +5,16 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows;
 
-namespace Tetris.TetrisModule.SingularBlocks
+namespace Tetris.TetrisModule.BlockModule.SingularBlocks
 {
-    class BlockT : Block
+    class BlockJ : Block
     {
-        public BlockT() : base(new Point2D[4] {
+        public BlockJ() : base(new Point2D[4] {
+                            new Point2D(-1,-1),
                             new Point2D(-1,0),
-                            new Point2D(0,0),
-                            new Point2D(0,-1),
+                            new Point2D(-0,0),
                             new Point2D(1,0)
-                        }, Colors.DarkMagenta)
+                        }, Colors.Blue)
         {
         }
     }
