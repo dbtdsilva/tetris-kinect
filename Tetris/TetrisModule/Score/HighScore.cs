@@ -18,7 +18,7 @@ namespace Tetris.TetrisModule
         }
         /* Add a new score to the highscore table */
         public bool addScore(int score, string name) {
-            if (!checkScore(score))
+            if (!isHighscore(score))
                 return false;
 
             int pos;
@@ -42,7 +42,7 @@ namespace Tetris.TetrisModule
             return true;
         }
         /* Checks if user beat any value on table or not */
-        public bool checkScore(int score)
+        public bool isHighscore(int score)
         {
             if (size != array.Length)
                 return true;

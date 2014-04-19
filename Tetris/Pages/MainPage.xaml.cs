@@ -128,26 +128,20 @@ namespace Tetris.Pages
                     TetrisGridBack.Children.Add(new Rectangle
                     {
                         Fill = new SolidColorBrush(Colors.WhiteSmoke),
-                        Margin = new Thickness(1)
+                        Margin = new Thickness(0.5)
                     });
                 }
             }
 
-            GridNext.Background = new SolidColorBrush(Colors.Black);
+            /* Grid related with next block */
             nextBlockTable = new Rectangle[4, 4];
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
                     nextBlockTable[j, i] = new Rectangle();
-                    nextBlockTable[j, i].Margin = new Thickness(0.5);
                     NextBlockGrid.Children.Add(nextBlockTable[j, i]);
 
-                    NextBlockBackground.Children.Add(new Rectangle
-                    {
-                        Fill = new SolidColorBrush(Colors.WhiteSmoke),
-                        Margin = new Thickness(1)
-                    });
                 }
             }
         }
@@ -209,7 +203,7 @@ namespace Tetris.Pages
 
         public void gameEnded(int finalscore)
         {
-            if (tetris.isHighscore(finalscore))
+            if (tetris.getHighscores().isHighscore(finalscore))
             {
                 GameOverHighscore submitPanel = new GameOverHighscore(finalscore);
                 MainWindow.Instance.popPage(submitPanel);

@@ -23,6 +23,7 @@ namespace Tetris.Pages
         public Pause()
         {
             InitializeComponent();
+            changeButtonStatus(TetrisM.getInstance().getGBlockStatus());
         }
 
         private void resumeButton_Click(object sender, RoutedEventArgs e)
@@ -45,6 +46,26 @@ namespace Tetris.Pages
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
+        }
+
+        private void ghostBlockButton_Click(object sender, RoutedEventArgs e)
+        {
+            TetrisM t = TetrisM.getInstance();
+            t.changeGBlockStatus();
+            changeButtonStatus(t.getGBlockStatus());
+        }
+
+        private void changeButtonStatus(bool activate) {
+            if (activate)
+            {
+                ghostBlockButton.Content = "Deactivate Ghost Block";
+                ghostBlockButton.Background = new SolidColorBrush(Colors.Purple);
+            }
+            else
+            {
+                ghostBlockButton.Content = "Activate Ghost Block";
+                ghostBlockButton.Background = new SolidColorBrush(Colors.LightGray);
+            }
         }
     }
 }

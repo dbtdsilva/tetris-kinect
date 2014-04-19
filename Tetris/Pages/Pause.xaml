@@ -16,6 +16,7 @@
             </Grid>
             <k:KinectTileButton BorderThickness="3" Content="Resume" Height="150" Width="150" HorizontalAlignment="Left" Margin="44,36,0,0" Name="resumeButton" VerticalAlignment="Top" Foreground="White" k:KinectTileButton.Click="resumeButton_Click" />
             <k:KinectTileButton BorderThickness="3" Content="Restart" Height="150" Width="150" HorizontalAlignment="Right" Margin="0,36,44,0" Name="restartButton" VerticalAlignment="Top" Foreground="White" k:KinectTileButton.Click="restartButton_Click" />
+            <k:KinectTileButton Content="Ghost Block Status" Width="341" Height="187" HorizontalAlignment="Left" Margin="65,0,0,48" Name="ghostBlockButton" VerticalAlignment="Bottom" Foreground="White" k:KinectTileButton.Click="ghostBlockButton_Click" FontSize="24" />
         </Grid>
     </k:KinectRegion>
 </Page>

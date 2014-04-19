@@ -79,40 +79,35 @@ namespace Tetris.TetrisModule
             highscoreTable = new HighScore(10);
         }
         /****** PUBLIC FUNCTIONS ******/
-        public static TetrisM getInstance()
+        public static TetrisM getInstance()     /* METHOD Getter for instance (Singleton) */
         {
             if (instance == null)
-            {
                 instance = new TetrisM();
-            }
             return instance;
         }
-        public Color[,] getTable()
+        public Color[,] getTable()              /* METHOD Getter for table */
         {
             return table;
         }
-        public void startGame()
+        public void startGame()                 /* METHOD Start tetris game */
         {
-            currentScore = 0;
-            if (scoreChanged != null) scoreChanged(currentScore);
-            paused = false;
+            currentScore = 0;                                           /* Reset current score */
+            if (scoreChanged != null) scoreChanged(currentScore);       /* EVENT - Inform about the score reset */
+            paused = false;                                             /* Put flag pause to false */
 
-            currentBlock = BlockFactory.generateBlock();
-            nextBlock = BlockFactory.generateBlock();
+            clearTable();                                               /* Clear table from previous games */
+            if (tableChanged != null) tableChanged();                   /* EVENT - Inform that all table may be changed */
+            currentBlock = BlockFactory.generateBlock();                /* Generate current block */
+            nextBlock = BlockFactory.generateBlock();                   /* Generate next block */
+            if (nextBlockChanged != null) nextBlockChanged(nextBlock);  /* EVENT - Inform that next block changed */
+            if (blockPaint != null) blockPaint(currentBlock);           /* EVENT - Inform that current block changed */
 
-            if (nextBlockChanged != null) nextBlockChanged(nextBlock);
-
-            clearTable();
-            if (tableChanged != null) tableChanged();
-            if (blockPaint != null)
-                blockPaint(currentBlock);
-            checkGhostBlock();
+            checkGhostBlock();                                          /* First check on ghost block */
             
-            secondsLeft = new TimeSpan(0, 2, 0);
-            if (clockTick != null) 
-                clockTick(secondsLeft);
-            slideTimer.Start();
-            timeOut.Start();
+            secondsLeft = new TimeSpan(0, 2, 0);                        /* Create a time span to control the time over */
+            if (clockTick != null) clockTick(secondsLeft);              /* EVENT - Inform the time left */
+            slideTimer.Start();                                         /* Starts slide timer */
+            timeOut.Start();                                            /* Start time over timer */
         }
         public void saveHighscores()
         {
@@ -133,36 +128,31 @@ namespace Tetris.TetrisModule
             }
             return false;
         }
-        public HighScore getHighscores() {
+        public HighScore getHighscores() {                      /* METHOD - Getter for highscores table */
             return highscoreTable;
         }
-        public bool isHighscore(int score)
+        public bool submitScore(int score, string name)         /* METHOD - Submit a score to the table */
         {
-            return highscoreTable.checkScore(score);
-        }
-        public bool submitScore(int score, string name)
-        {
-            if (!highscoreTable.addScore(score, name))
-                return false;
-            if (highscoreChanged != null)
-                highscoreChanged();
+            if (!highscoreTable.addScore(score, name))          /* If that score is not higher that any in the table */
+                return false;                                   /* Otherwise, it will insert */
+            if (highscoreChanged != null) highscoreChanged();   /* EVENT - Inform about highscores changes */
             return true;
         }
-        public void pausePlay()
+        public void pausePlay()                                 /* METHOD - Pause/Play the game */
         {
-            paused = !paused;
-            if (paused)
+            paused = !paused;                                   /* Change current status */
+            if (paused)                                         /* If it changed to pause mode */
             {
                 timeOut.Stop();
                 slideTimer.Stop();
             }
-            else
+            else                                                /* If it changed to play mode */
             {
                 timeOut.Start();
                 slideTimer.Start();
             }
         }
-        public void moveCurrentBlock(Actions e, bool forced = false)
+        public void moveCurrentBlock(Actions e, bool forced = false)    /* METHOD - Move current block */
         {
             if (paused) return;                                 /* Doesn't allow any movements when paused */
 
@@ -182,7 +172,9 @@ namespace Tetris.TetrisModule
                     changeScore(currentScore + 1);                      /* Score is double than normal */
                     moveCurrentBlock(Actions.DOWN);                     /* Move current block */
                 }
-                newBlock();                                     /* And ask for a new block, no need to wait */
+                if (blockPaint != null) blockPaint(currentBlock);   /* Paint block before create a new one */
+                newBlock();                                         /* And ask for a new block, no need to wait */
+                return;
             } 
             else if (e == Actions.DOWN)                         /* DOWN action, moves block down */
             {
@@ -200,35 +192,48 @@ namespace Tetris.TetrisModule
                 currentBlock.rotate();
 
             if (e == Actions.LEFT || e == Actions.RIGHT || e == Actions.ROTATE)
-                checkGhostBlock();
+                checkGhostBlock();                              /* Ghost block only changes when moving left, right or rotate */
             if (blockPaint != null) blockPaint(currentBlock);         /* Current block needs to be painted */
         }
-        public Block getCurrentBlock() {
+        public Block getCurrentBlock()                          /* METHOD - Getter for current block */
+        {                        
             return currentBlock;
         }
-        public static bool validPos(int x, int y)
+        public int getCurrentScore()                            /* METHOD - Getter for current score */
+        {
+            return currentScore;
+        }
+        public bool getGBlockStatus()
+        {
+            return gblock_act;
+        }
+        public void changeGBlockStatus()
+        {
+            gblock_act = !gblock_act;
+            if (gblock_act)
+                checkGhostBlock();
+            else
+                blockMoved(gblock);
+        }
+        public static bool validPos(int x, int y)               /* METHOD static - to find out valid positions */
         {
             if (x >= NC || x < 0 || y >= NR || y < 0)
                 return false;
             return true;
         }
-        public int getCurrentScore()
-        {
-            return currentScore;
-        }
         /****** PRIVATE FUNCTIONS ******/
-        private void newBlock()
+        private void newBlock()                                 /* METHOD - to create a new block */
         {
-            fillTableWithBlock();
-
-            int row;
-            int linesNumber = 0;
+            slideTimer.Stop();
+            fillTableWithBlock();                               /* Before anything, put old block on table with blocks 
+                                                                 * It will be useful to check colisions */
             /* Check for lines complete */
+            int row, linesNumber = 0;
             while ((row = checkForLinesComplete()) != -1)
             {
                 linesNumber += 1;
-                deleteRow(row);
-                rowComplete(row);
+                deleteRow(row);                                 /* Delete that row from table */ 
+                if (rowComplete != null) rowComplete(row);      /* Call event to inform that row is gone */
             }
             /* If there is lines complete, increase current score */
             switch (linesNumber)
@@ -239,8 +244,8 @@ namespace Tetris.TetrisModule
                 case 4: changeScore(currentScore + 800); break;
             }
 
-            currentBlock = nextBlock;
-            /* Check if there's collision right before block appears, it means a game over */
+            currentBlock = nextBlock;                           /* Current block gets the value on nextBlock */
+            /* Check if there's collision right before block appears, it means that game is over */
             Point2D[] list = currentBlock.getList();
             Point2D pos = currentBlock.getPosition();
             for (int i = 0; i < list.Length; i++)
@@ -252,11 +257,13 @@ namespace Tetris.TetrisModule
                     return;
                 }
             }
-            gblock = new GhostBlock(currentBlock.getList());
-            checkGhostBlock();
-            nextBlock = BlockFactory.generateBlock();
-            if (nextBlockChanged != null) nextBlockChanged(nextBlock);
-            if (blockPaint != null) blockPaint(currentBlock);
+            /* If there is no game over yet */
+            gblock = new GhostBlock(currentBlock.getList());            /* Generate Ghost Block */
+            checkGhostBlock();                                          /* Check his position */
+            nextBlock = BlockFactory.generateBlock();                   /* Generate next block */
+            if (nextBlockChanged != null) nextBlockChanged(nextBlock);  /* Call event informing that next block changed */
+            if (blockPaint != null) blockPaint(currentBlock);           /* Call event informing that current block also changed */
+            slideTimer.Start();
         }
 
         private int checkForLinesComplete()
