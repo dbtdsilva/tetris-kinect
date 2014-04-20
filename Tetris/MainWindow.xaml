@@ -6,16 +6,17 @@
         Title="MainWindow"
         IsEnabled="True"
         WindowState="Maximized"
-        Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" 
-        Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
+        Width="1280" 
+        Height="720"
         Closing="Window_Closing"
         >
     <Grid>
-        <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden">
-        </Frame>
-        <Grid x:Name="popupBackground" Background="Black" Opacity="0.5" Visibility="Collapsed">
-        </Grid>
-        <Frame x:Name="popupFrame" Visibility="Collapsed" NavigationUIVisibility="Hidden">
-        </Frame>
+        <Viewbox Stretch="Fill">
+            <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
+        </Viewbox>
+        <Grid x:Name="popupBackground" Background="Black" Opacity="0.5" Visibility="Collapsed"/>
+        <Viewbox Stretch="Fill">
+            <Frame x:Name="popupFrame" Visibility="Collapsed" NavigationUIVisibility="Hidden"/>
+        </Viewbox>
     </Grid>
 </Window>

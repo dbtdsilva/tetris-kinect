@@ -35,8 +35,8 @@ namespace Tetris.Pages
                 if (!TetrisM.getInstance().submitScore(finalscore, submit_name.Text))
                     /* This is never supposed to return false since it is controlled by MainPage */
                     throw new NotImplementedException();
-                TetrisM.getInstance().startGame();
-                MainWindow.Instance.exitPopup();
+                StartPopup page = new StartPopup();
+                MainWindow.Instance.popPage(page);
             }
         }
     }

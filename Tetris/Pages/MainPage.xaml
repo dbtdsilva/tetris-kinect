@@ -1,12 +1,9 @@
 ﻿<Page x:Class="Tetris.Pages.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:k="http://schemas.microsoft.com/kinect/2013"
-      mc:Ignorable="d" 
-      Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" 
-      Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
+      Width="1280" 
+      Height="720"
 	  Title="MainPage" 
       Loaded="Page_Loaded"
       ShowsNavigationUI="False">
@@ -19,38 +16,50 @@
                     <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="200" Margin="20,20" HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <k:KinectSensorChooserUI HorizontalAlignment="Left" VerticalAlignment="Top" Name="sensorChooserUi" />
                 </Grid>
-                <Grid>
-                    <Label Content="HIGHSCORES" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="1105,366,212,0" FontWeight="Bold" FontSize="20" Width="139" />
-                    <DataGrid Padding="20" BorderBrush="Black" BorderThickness="1" LoadingRow="gridHighscores_LoadingRow" RowDetailsVisibilityMode="Collapsed" IsTabStop="False" HeadersVisibility="Row" Background="Transparent" IsHitTestVisible="False" GridLinesVisibility="None" FontSize="22" HorizontalAlignment="Center" Name="gridHighscores" Width="359" Margin="988,408,109,121" Height="357">
-                        <DataGrid.RowHeaderStyle>
-                            <Style TargetType="{x:Type DataGridRowHeader}">
-                                <Setter Property="Background" Value="Transparent" />
-                            </Style>
-                        </DataGrid.RowHeaderStyle>
-                        <DataGrid.CellStyle>
-                            <Style TargetType="{x:Type DataGridCell}">
-                                <Setter Property="Margin" Value="50 0 0 0"></Setter>
-                            </Style>
-                        </DataGrid.CellStyle>
-                    </DataGrid>
-                </Grid>
-                <Grid Height="112" Width="112" HorizontalAlignment="Center" Background="WhiteSmoke" Name="GridNext" VerticalAlignment="Top" Margin="907,65,417,0">
-                    <Border BorderBrush="Black" BorderThickness="1" />
-                    <Grid>
-                        <UniformGrid Margin="1" Name="NextBlockBackground" />
-                        <UniformGrid Margin="1" Name="NextBlockGrid" />
-                    </Grid>
-                </Grid>
-                <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="916,25,426,0" Name="nextblock_label" VerticalAlignment="Top" />
-                <Grid HorizontalAlignment="Center" Width="350" Height="700" Background="White" Margin="0,56,0,112" Name="MainGrid" >
+                <!-- TETRIS GRID - GAME GRID -->
+                <Label Content="2:00" Height="50" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Width="128" Margin="0,34,0,0" />
+                <Grid HorizontalAlignment="Center" Background="White" Name="MainGrid" Height="560" Width="280">
                     <UniformGrid Margin="1" Name="TetrisGridBack"/>
                     <UniformGrid Margin="1" Name="TetrisGrid" />
                 </Grid>
-                <Label Content="SCORE" Height="37" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="75" FontWeight="Bold" FontSize="20" />
-                <Label Content="0" Height="37" HorizontalAlignment="Center" Name="score" VerticalAlignment="Bottom" Margin="45" FontSize="18" FontWeight="Bold" />
+                <Label Content="SCORE" Height="37" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="35" FontWeight="Bold" FontSize="20" />
+                <Label Content="0" Height="37" HorizontalAlignment="Center" Name="score" VerticalAlignment="Bottom" Margin="5" FontSize="18" FontWeight="Bold" />
+
+                <!-- NEXT BLOCK GRID -->
+                <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="916,25,426,0" Name="nextblock_label" VerticalAlignment="Top" />
+                <Grid Name="MainGridNextBlock" Height="125" Width="125" HorizontalAlignment="Center" Background="WhiteSmoke" VerticalAlignment="Top" Margin="792,81,342,0">
+                    <Border BorderBrush="Black" BorderThickness="1" />
+                    <Grid Name="GridNextBlock" Height="60" Width="120">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </Grid>
                 
+                <!-- PAUSE BUTTON -->
                 <k:KinectTileButton Content="Pause" Height="150" Width="150" HorizontalAlignment="Right" Margin="25,25" Name="PauseButton" VerticalAlignment="Top" k:KinectTileButton.Click="PauseButton_Click" Foreground="White" BorderThickness="2"></k:KinectTileButton>
-                <Label Content="TimeSpan" Height="50" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Margin="611,8,611,0" />
+                
+                <!-- HIGHSCORES REGION -->
+                <Label Content="HIGHSCORES" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="139" Margin="948,240,172,0" />
+                <DataGrid Padding="20" BorderBrush="Black" BorderThickness="1" LoadingRow="gridHighscores_LoadingRow" RowDetailsVisibilityMode="Collapsed" IsTabStop="False" HeadersVisibility="Row" Background="Transparent" IsHitTestVisible="False" GridLinesVisibility="None" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Top" Name="gridHighscores" Width="359" Height="357" Margin="838,282,62,0">
+                    <DataGrid.RowHeaderStyle>
+                        <Style TargetType="{x:Type DataGridRowHeader}">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                    </DataGrid.RowHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Margin" Value="50 0 0 0"></Setter>
+                        </Style>
+                    </DataGrid.CellStyle>
+                </DataGrid>
             </Grid>
         </k:KinectRegion>
     </Grid>

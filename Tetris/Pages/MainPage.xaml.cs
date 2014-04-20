@@ -35,6 +35,7 @@ namespace Tetris.Pages
         public MainPage()
         {
             InitializeComponent();
+
             // Initialize the sensor chooser and UI
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
@@ -59,8 +60,8 @@ namespace Tetris.Pages
             createGrid();
             if (tetris.loadHighscores())
                 highscoreChanged();
-            tetris.startGame();
-
+            StartPopup page = new StartPopup();
+            MainWindow.Instance.popPage(page);
         }
         private void gridHighscores_LoadingRow(object sender, DataGridRowEventArgs e)
         {
@@ -134,14 +135,16 @@ namespace Tetris.Pages
             }
 
             /* Grid related with next block */
-            nextBlockTable = new Rectangle[4, 4];
-            for (int i = 0; i < 4; i++)
+            nextBlockTable = new Rectangle[4, 2];
+            for (int row = 0; row < 2; row++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int col = 0; col < 4; col++)
                 {
-                    nextBlockTable[j, i] = new Rectangle();
-                    NextBlockGrid.Children.Add(nextBlockTable[j, i]);
-
+                    nextBlockTable[col, row] = new Rectangle();
+                    nextBlockTable[col, row].StrokeThickness = 1;
+                    Grid.SetRow(nextBlockTable[col, row], row);
+                    Grid.SetColumn(nextBlockTable[col, row], col);
+                    GridNextBlock.Children.Add(nextBlockTable[col, row]);
                 }
             }
         }
@@ -186,18 +189,37 @@ namespace Tetris.Pages
         }
         private void nextBlockChanged(Block nextBlock)
         {
-            Point2D[] list = nextBlock.getList();
-            Color c = nextBlock.getColor();
+            GridNextBlock.ColumnDefinitions.Clear();
             for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 2; j++)
                 {
                     nextBlockTable[i, j].Fill = new SolidColorBrush(Colors.Transparent);
+                    nextBlockTable[i, j].Stroke = new SolidColorBrush(Colors.Transparent);
                 }
             }
+            Point2D[] list = nextBlock.getList();
+            Color c = nextBlock.getColor();
+            int min = Int32.MaxValue;
+            int max = Int32.MinValue;
             for (int i = 0; i < list.Length; i++)
             {
-                nextBlockTable[list[i].X + 1, list[i].Y + 2].Fill = new SolidColorBrush(c);
+                if (list[i].X < min)
+                    min = list[i].X;
+                if (list[i].X > max)
+                    max = list[i].X;
+            }
+            int cols = max - min + 1;
+            GridNextBlock.Width = ((MainGridNextBlock.ActualWidth - 5) / 4) * cols;
+            while (cols < GridNextBlock.ColumnDefinitions.Count)
+                GridNextBlock.ColumnDefinitions.RemoveAt(GridNextBlock.ColumnDefinitions.Count - 1);
+            while (cols > GridNextBlock.ColumnDefinitions.Count)
+                GridNextBlock.ColumnDefinitions.Add(new ColumnDefinition());
+
+            for (int i = 0; i < list.Length; i++)
+            {
+                nextBlockTable[list[i].X - min, list[i].Y + 1].Fill = new SolidColorBrush(c);
+                nextBlockTable[list[i].X - min, list[i].Y + 1].Stroke = new SolidColorBrush(Colors.Black);
             }
         }
 

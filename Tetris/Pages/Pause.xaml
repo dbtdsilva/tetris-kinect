@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:k="http://schemas.microsoft.com/kinect/2013"
         Title="Pause" IsEnabled="True" 
-        Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" 
-        Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
+        Width="1280" 
+        Height="720"
         ShowsNavigationUI="False"
       >
     <k:KinectRegion x:Name="kinectRegion">
