@@ -44,8 +44,10 @@
                 </Grid>
                 
                 <!-- PAUSE BUTTON -->
-                <k:KinectTileButton Content="Pause" Height="150" Width="150" HorizontalAlignment="Right" Margin="25,25" Name="PauseButton" VerticalAlignment="Top" k:KinectTileButton.Click="PauseButton_Click" Foreground="White" BorderThickness="2"></k:KinectTileButton>
-                
+                <k:KinectCircleButton Style="{StaticResource PauseButtonStyle}" Label="Pause" Height="175" Width="175" HorizontalAlignment="Right" Margin="25,25" Name="PauseButton" VerticalAlignment="Top" k:KinectCircleButton.Click="PauseButton_Click" BorderThickness="2">
+                    
+                </k:KinectCircleButton>
+
                 <!-- HIGHSCORES REGION -->
                 <Label Content="HIGHSCORES" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="139" Margin="948,240,172,0" />
                 <DataGrid Padding="20" BorderBrush="Black" BorderThickness="1" LoadingRow="gridHighscores_LoadingRow" RowDetailsVisibilityMode="Collapsed" IsTabStop="False" HeadersVisibility="Row" Background="Transparent" IsHitTestVisible="False" GridLinesVisibility="None" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Top" Name="gridHighscores" Width="359" Height="357" Margin="838,282,62,0">

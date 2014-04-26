@@ -14,8 +14,8 @@
                 <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="200" Margin="20,20" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
             </Grid>
-            <k:KinectTileButton BorderThickness="3" Content="Resume" Height="150" Width="150" HorizontalAlignment="Left" Margin="44,36,0,0" Name="resumeButton" VerticalAlignment="Top" Foreground="White" k:KinectTileButton.Click="resumeButton_Click" />
-            <k:KinectTileButton BorderThickness="3" Content="Restart" Height="150" Width="150" HorizontalAlignment="Right" Margin="0,36,44,0" Name="restartButton" VerticalAlignment="Top" Foreground="White" k:KinectTileButton.Click="restartButton_Click" />
+            <k:KinectCircleButton Style="{StaticResource PlayButtonStyle}" BorderThickness="3" Label="Resume" Height="175" Width="175" HorizontalAlignment="Left" Margin="44,36,0,0" Name="resumeButton" VerticalAlignment="Top" k:KinectCircleButton.Click="resumeButton_Click" />
+            <k:KinectCircleButton Style="{StaticResource RestartButtonStyle}" BorderThickness="3" Label="Restart" Height="175" Width="175" HorizontalAlignment="Right" Margin="0,36,44,0" Name="restartButton" VerticalAlignment="Top" k:KinectCircleButton.Click="restartButton_Click" />
             <k:KinectTileButton Content="Ghost Block Status" Width="341" Height="187" HorizontalAlignment="Left" Margin="65,0,0,48" Name="ghostBlockButton" VerticalAlignment="Bottom" Foreground="White" k:KinectTileButton.Click="ghostBlockButton_Click" FontSize="24" />
         </Grid>
     </k:KinectRegion>

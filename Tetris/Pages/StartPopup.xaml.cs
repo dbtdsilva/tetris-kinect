@@ -30,5 +30,10 @@ namespace Tetris.Pages
             TetrisM.getInstance().startGame();
             MainWindow.Instance.exitPopup();
         }
+
+        private void KinectCircleButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
