@@ -20,9 +20,6 @@ using System.Collections;
 
 namespace Tetris.Pages
 {
-    /// <summary>
-    /// Interaction logic for MainPage.xaml
-    /// </summary>
     public partial class MainPage : Page, IMainPage
     {
         private Rectangle[,] tetrisTable;
@@ -56,21 +53,18 @@ namespace Tetris.Pages
             tetris.nextBlockChanged += new TetrisM.NextBlockChangedEventHandler(nextBlockChanged);
             tetris.scoreChanged += new TetrisM.ScoreChangedEventHandler(scoreChanged);
             tetris.highscoreChanged += new TetrisM.HighscoresChangedEventHandler(highscoreChanged);
+            tetris.gameStart += new TetrisM.GameStartedEventHandler(gameStarted);
 
             createGrid();
             if (tetris.loadHighscores())
                 highscoreChanged();
+
             StartPopup page = new StartPopup();
             MainWindow.Instance.popPage(page);
         }
         private void gridHighscores_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString() + ".";
-        }
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            var window = MainWindow.GetWindow(this);
-            window.KeyDown += new KeyEventHandler(onKeyDown);
         }
         private void highscoreChanged()
         {
@@ -222,9 +216,15 @@ namespace Tetris.Pages
                 nextBlockTable[list[i].X - min, list[i].Y + 1].Stroke = new SolidColorBrush(Colors.Black);
             }
         }
-
+        public void gameStarted()
+        {
+            var window = MainWindow.GetWindow(this);
+            window.KeyDown += new KeyEventHandler(onKeyDown);
+        }
         public void gameEnded(int finalscore)
         {
+            var window = MainWindow.GetWindow(this);
+            window.KeyDown -= new KeyEventHandler(onKeyDown);
             if (tetris.getHighscores().isHighscore(finalscore))
             {
                 GameOverHighscore submitPanel = new GameOverHighscore(finalscore);

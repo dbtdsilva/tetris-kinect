@@ -39,6 +39,8 @@ namespace Tetris.TetrisModule
         public event ScoreChangedEventHandler scoreChanged;
         public delegate void HighscoresChangedEventHandler();
         public event HighscoresChangedEventHandler highscoreChanged;
+        public delegate void GameStartedEventHandler();
+        public event GameStartedEventHandler gameStart;
 
         /*** Public stats related with the game */
         public static int NR = 20;                                  /* Number of rows */
@@ -108,6 +110,8 @@ namespace Tetris.TetrisModule
             if (clockTick != null) clockTick(secondsLeft);              /* EVENT - Inform the time left */
             slideTimer.Start();                                         /* Starts slide timer */
             timeOut.Start();                                            /* Start time over timer */
+
+            gameStart();
         }
         public void saveHighscores()
         {

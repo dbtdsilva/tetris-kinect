@@ -5,9 +5,7 @@
       Width="1280" 
       Height="720"
 	  Title="MainPage" 
-      Loaded="Page_Loaded"
       ShowsNavigationUI="False">
-    
     <Grid>
         <k:KinectRegion x:Name="kinectRegion">
             <Grid Background="White" k:KinectRegion.HandPointerGrip="HandPointerGrip" k:KinectRegion.HandPointerMove="HandPointerMove">

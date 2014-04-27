@@ -28,7 +28,7 @@ namespace Tetris
             Instance = this;
 
             mainpage = new MainPage();
-            this.mainFrame.Navigate(mainpage);
+            restoreStart();
         }
         public void changeFrame(IMainPage page)
         {
@@ -46,6 +46,7 @@ namespace Tetris
         }
         public void exitPopup()
         {
+            var window = MainWindow.GetWindow(this);
             this.popupFrame.Visibility = Visibility.Collapsed;
             this.popupBackground.Visibility = Visibility.Collapsed;
         }
