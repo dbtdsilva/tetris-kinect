@@ -19,33 +19,24 @@ namespace Tetris.Pages
 {
     public partial class Pause : Page, IMainPage
     {
-        private KinectSensorChooser sensorChooser;
         public Pause()
         {
+            MainWindow.Instance.changeSensorPosition(HorizontalAlignment.Center, VerticalAlignment.Top);
             InitializeComponent();
             changeButtonStatus(TetrisM.getInstance().getGBlockStatus());
         }
 
         private void resumeButton_Click(object sender, RoutedEventArgs e)
         {
-            TetrisM.getInstance().pausePlay();
             MainWindow.Instance.restoreStart();
+            TetrisM.getInstance().pausePlay();
         }
 
         private void restartButton_Click(object sender, RoutedEventArgs e)
         {
-            TetrisM.getInstance().startGame();
-            MainWindow.Instance.restoreStart();
-        }
 
-        public void bindSensor(KinectSensorChooser sensorChooser)
-        {
-            this.sensorChooser = sensorChooser;
-            // Bind the sensor chooser's current sensor to the KinectRegion
-            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
-            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
-            this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
-            this.sensorChooser.Start();
+            MainWindow.Instance.restoreStart();
+            TetrisM.getInstance().startGame();
         }
 
         private void ghostBlockButton_Click(object sender, RoutedEventArgs e)
@@ -58,13 +49,13 @@ namespace Tetris.Pages
         private void changeButtonStatus(bool activate) {
             if (activate)
             {
-                ghostBlockButton.Content = "Deactivate Ghost Block";
-                ghostBlockButton.Background = new SolidColorBrush(Colors.Purple);
+                ghostBlockButtonLabel.Content = "Deactivate";
+                ghostBlockButtonEllipse.Fill = new SolidColorBrush(Colors.Gray);
             }
             else
             {
-                ghostBlockButton.Content = "Activate Ghost Block";
-                ghostBlockButton.Background = new SolidColorBrush(Colors.LightGray);
+                ghostBlockButtonLabel.Content = "Activate";
+                ghostBlockButtonEllipse.Fill = new SolidColorBrush(Colors.White);
             }
         }
     }

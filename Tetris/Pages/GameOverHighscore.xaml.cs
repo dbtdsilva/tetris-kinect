@@ -28,6 +28,8 @@ namespace Tetris.Pages
             score.Content = finalscore;
             this.finalscore = finalscore;
             changeLetter(0);
+
+            MainWindow.Instance.KeyDown += new KeyEventHandler(Key_Down);
         }
 
         private void onSubmit(object sender, RoutedEventArgs e)
@@ -46,13 +48,7 @@ namespace Tetris.Pages
 
             StartPopup page = new StartPopup();
             MainWindow.Instance.popPage(page);
-            var window = MainWindow.GetWindow(this);
-            window.KeyDown -= new KeyEventHandler(Key_Down);
-        }
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            var window = MainWindow.GetWindow(this);
-            window.KeyDown += new KeyEventHandler(Key_Down);
+            MainWindow.Instance.KeyDown -= new KeyEventHandler(Key_Down);
         }
         private void changeLetter(int new_index) {
             TextBlock letter = (TextBlock)VisualTreeHelper.GetChild(lettersGrid, activeIndex);

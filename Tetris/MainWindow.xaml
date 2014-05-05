@@ -11,12 +11,20 @@
         Closing="Window_Closing"
         >
     <Grid>
-        <Viewbox Stretch="Fill">
-            <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
-        </Viewbox>
-        <Grid x:Name="popupBackground" Background="Black" Opacity="0.5" Visibility="Collapsed"/>
-        <Viewbox Stretch="Fill">
-            <Frame x:Name="popupFrame" Visibility="Collapsed" NavigationUIVisibility="Hidden"/>
-        </Viewbox>
+        <k:KinectRegion x:Name="kinectRegion">
+            <Grid>
+                <Viewbox Stretch="Uniform">
+                    <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
+                </Viewbox>
+                <Grid x:Name="popupBackground" Background="Black" Opacity="0.7" Visibility="Collapsed"/>
+                <Viewbox Stretch="Uniform">
+                    <Frame x:Name="popupFrame" Visibility="Collapsed" NavigationUIVisibility="Hidden"/>
+                </Viewbox>
+                <Grid Margin="10 0 10 20">
+                    <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="200" Margin="20,20" HorizontalAlignment="Left" VerticalAlignment="Top" Name="sensorViewer" />
+                    <k:KinectSensorChooserUI HorizontalAlignment="Left" VerticalAlignment="Top" Name="sensorChooserUi" />
+                </Grid>
+            </Grid>
+        </k:KinectRegion>
     </Grid>
 </Window>

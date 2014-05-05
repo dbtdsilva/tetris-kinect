@@ -6,7 +6,6 @@
         Height="720"
         Background="{x:Null}" xmlns:k="http://schemas.microsoft.com/kinect/2013">
     <Grid>
-        <k:KinectCircleButton k:KinectCircleButton.Click="PlayButton_Click" Style="{StaticResource PlayButtonStyle}" Foreground="White" Height="300" Label="Play" HorizontalAlignment="Center" Name="PlayButton" VerticalAlignment="Center">
-        </k:KinectCircleButton>
+        <k:KinectCircleButton k:KinectCircleButton.Click="PlayButton_Click" Style="{StaticResource PlayButtonStyle}" Foreground="White" Height="300" Width="300" Label="Play" HorizontalAlignment="Center" Name="PlayButton" VerticalAlignment="Center" />
     </Grid>
 </Page>

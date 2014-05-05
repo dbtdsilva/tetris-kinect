@@ -5,18 +5,17 @@
         Title="Pause" IsEnabled="True" 
         Width="1280" 
         Height="720"
-        ShowsNavigationUI="False"
-      >
-    <k:KinectRegion x:Name="kinectRegion">
-        <Grid>
-            <Grid Margin="10 0 10 20">
-                <Image HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="None" Margin="0 0 0 4"/>
-                <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="200" Margin="20,20" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
-            </Grid>
-            <k:KinectCircleButton Style="{StaticResource PlayButtonStyle}" BorderThickness="3" Label="Resume" Height="175" Width="175" HorizontalAlignment="Left" Margin="44,36,0,0" Name="resumeButton" VerticalAlignment="Top" k:KinectCircleButton.Click="resumeButton_Click" />
-            <k:KinectCircleButton Style="{StaticResource RestartButtonStyle}" BorderThickness="3" Label="Restart" Height="175" Width="175" HorizontalAlignment="Right" Margin="0,36,44,0" Name="restartButton" VerticalAlignment="Top" k:KinectCircleButton.Click="restartButton_Click" />
-            <k:KinectTileButton Content="Ghost Block Status" Width="341" Height="187" HorizontalAlignment="Left" Margin="65,0,0,48" Name="ghostBlockButton" VerticalAlignment="Bottom" Foreground="White" k:KinectTileButton.Click="ghostBlockButton_Click" FontSize="24" />
-        </Grid>
-    </k:KinectRegion>
+        >
+    <Grid>
+        <k:KinectCircleButton Style="{StaticResource PlayButtonStyle}" BorderThickness="3" Label="Resume" Height="175" Width="175" HorizontalAlignment="Left" Margin="50,50" Name="resumeButton" VerticalAlignment="Top" k:KinectCircleButton.Click="resumeButton_Click" />
+        <k:KinectCircleButton Style="{StaticResource RestartButtonStyle}" BorderThickness="3" Label="Restart" Height="175" Width="175" HorizontalAlignment="Right" Margin="50,50" Name="restartButton" VerticalAlignment="Top" k:KinectCircleButton.Click="restartButton_Click" />
+        <k:KinectCircleButton Width="187" Height="187" HorizontalAlignment="Left" Margin="65,0,0,118" Name="ghostBlockButton" VerticalAlignment="Bottom" k:KinectCircleButton.Click="ghostBlockButton_Click" FontSize="24">
+            <k:KinectCircleButton.Content>
+                <Ellipse Name="ghostBlockButtonEllipse" Height="100" Width="100"></Ellipse>
+            </k:KinectCircleButton.Content>
+        </k:KinectCircleButton>
+        <Label Name="ghostBlockButtonLabel" Content="Ghost Block Status" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="258,0,0,210" Height="36" Width="191" FontFamily="Segoe UI" FontWeight="Bold" FontSize="20"></Label>
+        <Label Content="Ghost Block" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="258,0,0,180" Height="34" Width="167" FontFamily="Segoe UI" FontSize="20"></Label>
+        <TextBlock Text="Ghost Block is a representation of where a falling block will land. As the player moves the falling piece, the ghost piece moves below it." TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="65,0,0,40" FontWeight="Light" TextAlignment="Justify" Height="80" Width="374" FontFamily="Segoe UI" FontSize="18" />
+    </Grid>
 </Page>

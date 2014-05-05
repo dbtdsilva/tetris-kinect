@@ -39,8 +39,8 @@ namespace Tetris.TetrisModule
         public event ScoreChangedEventHandler scoreChanged;
         public delegate void HighscoresChangedEventHandler();
         public event HighscoresChangedEventHandler highscoreChanged;
-        public delegate void GameStartedEventHandler();
-        public event GameStartedEventHandler gameStart;
+        public delegate void PauseStatusEventHandler(bool pause);
+        public event PauseStatusEventHandler pauseStatus;
 
         /*** Public stats related with the game */
         public static int NR = 20;                                  /* Number of rows */
@@ -95,7 +95,7 @@ namespace Tetris.TetrisModule
         {
             currentScore = 0;                                           /* Reset current score */
             if (scoreChanged != null) scoreChanged(currentScore);       /* EVENT - Inform about the score reset */
-            paused = false;                                             /* Put flag pause to false */
+            changePauseStatus(false);                                   /* Put flag pause to false */
 
             clearTable();                                               /* Clear table from previous games */
             if (tableChanged != null) tableChanged();                   /* EVENT - Inform that all table may be changed */
@@ -110,8 +110,6 @@ namespace Tetris.TetrisModule
             if (clockTick != null) clockTick(secondsLeft);              /* EVENT - Inform the time left */
             slideTimer.Start();                                         /* Starts slide timer */
             timeOut.Start();                                            /* Start time over timer */
-
-            gameStart();
         }
         public void saveHighscores()
         {
@@ -144,7 +142,7 @@ namespace Tetris.TetrisModule
         }
         public void pausePlay()                                 /* METHOD - Pause/Play the game */
         {
-            paused = !paused;                                   /* Change current status */
+            changePauseStatus(!paused);                         /* Change current status */
             if (paused)                                         /* If it changed to pause mode */
             {
                 timeOut.Stop();
@@ -428,7 +426,7 @@ namespace Tetris.TetrisModule
         {
             timeOut.Stop();                                 /* Stop all timers related with the game */
             slideTimer.Stop();                              /* Slider and time out */
-            paused = true;                                  /* Flag paused to prevent actions from user on game */
+            changePauseStatus(true);                        /* Flag paused to prevent actions from user on game */
 
             if (gameEnd != null) gameEnd(currentScore);     /* Reproduce event with final score */
             
@@ -439,6 +437,12 @@ namespace Tetris.TetrisModule
         {
             currentScore = newscore;                                /* Refresh value */
             if (scoreChanged != null) scoreChanged(newscore);       /* Call event */
+        }
+        private void changePauseStatus(bool pause)
+        {
+            paused = pause;
+            if (pauseStatus != null)
+                pauseStatus(paused);
         }
     }
 }

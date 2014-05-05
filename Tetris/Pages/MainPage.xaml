@@ -4,16 +4,10 @@
       xmlns:k="http://schemas.microsoft.com/kinect/2013"
       Width="1280" 
       Height="720"
-	  Title="MainPage" 
-      ShowsNavigationUI="False">
+	  Title="MainPage">
     <Grid>
-        <k:KinectRegion x:Name="kinectRegion">
             <Grid Background="White" k:KinectRegion.HandPointerGrip="HandPointerGrip" k:KinectRegion.HandPointerMove="HandPointerMove">
-                <Grid Margin="10 0 10 20">
-                    <Image HorizontalAlignment="Left" VerticalAlignment="Bottom" Stretch="None" Margin="0 0 0 4"/>
-                    <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="200" Margin="20,20" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <k:KinectSensorChooserUI HorizontalAlignment="Left" VerticalAlignment="Top" Name="sensorChooserUi" />
-                </Grid>
+                
                 <!-- TETRIS GRID - GAME GRID -->
                 <Label Content="2:00" Height="50" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Width="128" Margin="0,34,0,0" />
                 <Grid HorizontalAlignment="Center" Background="White" Name="MainGrid" Height="560" Width="280">
@@ -24,7 +18,7 @@
                 <Label Content="0" Height="37" HorizontalAlignment="Center" Name="score" VerticalAlignment="Bottom" Margin="5" FontSize="18" FontWeight="Bold" />
 
                 <!-- NEXT BLOCK GRID -->
-                <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="916,25,426,0" Name="nextblock_label" VerticalAlignment="Top" />
+                <Label Content="Next Block" FontSize="18" Height="37" HorizontalAlignment="Center" Margin="819,45,367,0" Name="nextblock_label" VerticalAlignment="Top" />
                 <Grid Name="MainGridNextBlock" Height="125" Width="125" HorizontalAlignment="Center" Background="WhiteSmoke" VerticalAlignment="Top" Margin="792,81,342,0">
                     <Border BorderBrush="Black" BorderThickness="1" />
                     <Grid Name="GridNextBlock" Height="60" Width="120">
@@ -42,9 +36,7 @@
                 </Grid>
                 
                 <!-- PAUSE BUTTON -->
-                <k:KinectCircleButton Style="{StaticResource PauseButtonStyle}" Label="Pause" Height="175" Width="175" HorizontalAlignment="Right" Margin="25,25" Name="PauseButton" VerticalAlignment="Top" k:KinectCircleButton.Click="PauseButton_Click" BorderThickness="2">
-                    
-                </k:KinectCircleButton>
+                <k:KinectCircleButton Style="{StaticResource PauseButtonStyle}" Label="Pause" Height="175" Width="175" HorizontalAlignment="Right" Margin="50,50" Name="PauseButton" VerticalAlignment="Top" k:KinectCircleButton.Click="PauseButton_Click" BorderThickness="2" />
 
                 <!-- HIGHSCORES REGION -->
                 <Label Content="HIGHSCORES" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="139" Margin="948,240,172,0" />
@@ -61,6 +53,5 @@
                     </DataGrid.CellStyle>
                 </DataGrid>
             </Grid>
-        </k:KinectRegion>
     </Grid>
 </Page>

@@ -27,21 +27,9 @@ namespace Tetris.Pages
         private TetrisM tetris = TetrisM.getInstance();
         private bool tickedEnd = true;
         
-        private readonly KinectSensorChooser sensorChooser;
-        
         public MainPage()
         {
             InitializeComponent();
-
-            // Initialize the sensor chooser and UI
-            this.sensorChooser = new KinectSensorChooser();
-            this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-            this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
-            this.sensorChooser.Start();
-
-            // Bind the sensor chooser's current sensor to the KinectRegion
-            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
-            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
 
             // Events related with Tetris Module
             tetris.blockPaint += new TetrisM.BlockRepaintEventHandler(blockPaintEvent);
@@ -53,7 +41,7 @@ namespace Tetris.Pages
             tetris.nextBlockChanged += new TetrisM.NextBlockChangedEventHandler(nextBlockChanged);
             tetris.scoreChanged += new TetrisM.ScoreChangedEventHandler(scoreChanged);
             tetris.highscoreChanged += new TetrisM.HighscoresChangedEventHandler(highscoreChanged);
-            tetris.gameStart += new TetrisM.GameStartedEventHandler(gameStarted);
+            tetris.pauseStatus += new TetrisM.PauseStatusEventHandler(pauseStatusChanged);
 
             createGrid();
             if (tetris.loadHighscores())
@@ -156,7 +144,7 @@ namespace Tetris.Pages
         private void scoreChanged(int score) {
             this.score.Content = score;
         }
-        private void onKeyDown(object sender, KeyEventArgs e)
+        public void onKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -216,15 +204,17 @@ namespace Tetris.Pages
                 nextBlockTable[list[i].X - min, list[i].Y + 1].Stroke = new SolidColorBrush(Colors.Black);
             }
         }
-        public void gameStarted()
+        public void pauseStatusChanged(bool pause)
         {
-            var window = MainWindow.GetWindow(this);
-            window.KeyDown += new KeyEventHandler(onKeyDown);
+            if (pause)
+                MainWindow.Instance.KeyDown -= new KeyEventHandler(onKeyDown);
+            else
+                MainWindow.Instance.KeyDown += new KeyEventHandler(onKeyDown);
         }
         public void gameEnded(int finalscore)
         {
-            var window = MainWindow.GetWindow(this);
-            window.KeyDown -= new KeyEventHandler(onKeyDown);
+            /**** UNCOMMENT THIS AFTER SYSTEM GOES LIVE ****
+             * if (tetris.getHighscores().isHighscore(finalscore) && KinectSensor.KinectSensors.Count != 0) */
             if (tetris.getHighscores().isHighscore(finalscore))
             {
                 GameOverHighscore submitPanel = new GameOverHighscore(finalscore);
@@ -240,7 +230,6 @@ namespace Tetris.Pages
         {
             tetris.pausePlay();
             Pause pause = new Pause();
-            pause.bindSensor(sensorChooser);
             MainWindow.Instance.mainFrame.Navigate(pause);
         }
         private void HandPointerGrip(object sender, HandPointerEventArgs args)
@@ -250,10 +239,11 @@ namespace Tetris.Pages
         private void HandPointerMove(object sender, HandPointerEventArgs e)
         {
             Point pos = e.HandPointer.GetPosition(this);
-            
-            int newpos = (int) (pos.X / (ActualWidth / TetrisM.NC));
+
+            int newpos = (int)(pos.X / (ActualWidth / TetrisM.NC));
             int currentPos = tetris.getCurrentBlock().getPosition().X;
-            if (newpos != currentPos) {
+            if (newpos != currentPos)
+            {
                 if (newpos > currentPos)
                 {
                     for (int i = 0; i < (newpos - currentPos); i++)
@@ -270,56 +260,14 @@ namespace Tetris.Pages
                 }
                 currentPos = newpos;
             }
-            if (pos.Y > 700 && !tickedEnd)
+            if ((pos.Y > (0.9 * ActualHeight)) && !tickedEnd)
             {
                 tickedEnd = true;
                 tetris.moveCurrentBlock(TetrisM.Actions.F_DOWN);
             }
-            if (pos.Y < 400)
+            else if (pos.Y < (0.7 * ActualHeight))
+            {
                 tickedEnd = false;
-        }
-        private static void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)
-        {
-            if (args.OldSensor != null)
-            {
-                try
-                {
-                    args.OldSensor.DepthStream.Range = DepthRange.Default;
-                    args.OldSensor.SkeletonStream.EnableTrackingInNearRange = false;
-                    args.OldSensor.DepthStream.Disable();
-                    args.OldSensor.SkeletonStream.Disable();
-                }
-                catch (InvalidOperationException)
-                {
-                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
-                    // E.g.: sensor might be abruptly unplugged.
-                }
-            }
-
-            if (args.NewSensor != null)
-            {
-                try
-                {
-                    args.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
-                    args.NewSensor.SkeletonStream.Enable();
-
-                    try
-                    {
-                        args.NewSensor.DepthStream.Range = DepthRange.Near;
-                        args.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        // Non Kinect for Windows devices do not support Near mode, so reset back to default mode.
-                        args.NewSensor.DepthStream.Range = DepthRange.Default;
-                        args.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
-                    }
-                }
-                catch (InvalidOperationException)
-                {
-                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
-                    // E.g.: sensor might be abruptly unplugged.
-                }
             }
         }
     }

@@ -5,7 +5,6 @@
         Title="GameOver" IsEnabled="True" 
         Width="1280" 
         Height="720"
-        Loaded="Page_Loaded"
         Background="{x:Null}">
     <Grid>
         <Grid Background="White" Margin="300,200,300,200">

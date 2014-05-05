@@ -1,18 +1,18 @@
 ﻿<Page x:Class="Tetris.Pages.GameOver"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:k="http://schemas.microsoft.com/kinect/2013"
         Title="GameOver" IsEnabled="True" 
         Width="1280" 
         Height="720"
-        Background="{x:Null}" xmlns:k="http://schemas.microsoft.com/kinect/2013">
+        Background="{x:Null}">
     <Grid>
         <Grid Background="White" Margin="400,250">
             <Label HorizontalAlignment="Center" Name="gameover_label" Content="Game Over" FontSize="36" />
             <Label HorizontalAlignment="Center" Name="score" Content="0" FontSize="20" Width="192" Margin="228,70,36,30" />
             <Label HorizontalAlignment="Center" Content="Score: " FontSize="20" Margin="-80,70,0,70" />
             
-            <!-- Ellipse to fill background of circle button as white circle and not as white square, since kinectCircleButton is defined as
-                   a square -->
+            <!-- Ellipse to fill background of circle button as white circle and not as white square, since kinectCircleButton is defined as a square -->
             <Ellipse Fill="White" Height="90" Width="90" Margin="0, -45" VerticalAlignment="Bottom"></Ellipse>
             <k:KinectCircleButton k:KinectCircleButton.Click="RestartButton_Click" Style="{StaticResource RestartButtonStyle}" Height="158" Width="158" LabelPosition="None" Label="Restart" HorizontalAlignment="Center" Name="RestartButton" VerticalAlignment="Bottom" Margin="0,-79"/>
         </Grid>
