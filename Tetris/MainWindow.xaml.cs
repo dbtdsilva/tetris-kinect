@@ -101,7 +101,6 @@ namespace Tetris
                 try
                 {
                     args.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
-                    args.NewSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
                     args.NewSensor.SkeletonStream.Enable();
 
                     try

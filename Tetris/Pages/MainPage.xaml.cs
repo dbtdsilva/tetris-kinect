@@ -17,6 +17,7 @@ using Microsoft.Kinect.Toolkit.Controls;
 using Microsoft.Kinect;
 using System.Data;
 using System.Collections;
+using System.Windows.Threading;
 
 namespace Tetris.Pages
 {
@@ -26,11 +27,19 @@ namespace Tetris.Pages
         private Rectangle[,] nextBlockTable;
         private TetrisM tetris = TetrisM.getInstance();
         private bool tickedEnd = true;
-        
+        private bool moveDown = false;
+        DispatcherTimer kinectSmoothMovement = new DispatcherTimer();
+
+        private int timeBetweenShiftsMilliseconds = 650;
+
+        TetrisM.Actions action;
         public MainPage()
         {
             InitializeComponent();
 
+            kinectSmoothMovement.Tick += new EventHandler(onTimedEvent);
+            kinectSmoothMovement.Interval = TimeSpan.FromMilliseconds(timeBetweenShiftsMilliseconds);
+            kinectSmoothMovement.Start();
             // Events related with Tetris Module
             tetris.blockPaint += new TetrisM.BlockRepaintEventHandler(blockPaintEvent);
             tetris.blockMoved += new TetrisM.BlockMovedEventHandler(blockMovedEvent);
@@ -238,7 +247,8 @@ namespace Tetris.Pages
         }
         private void HandPointerMove(object sender, HandPointerEventArgs e)
         {
-            Point pos = e.HandPointer.GetPosition(this);
+            /* 10 X positions for Kinect Horizontal Movement */
+            /*Point pos = e.HandPointer.GetPosition(this);
 
             int newpos = (int)(pos.X / (ActualWidth / TetrisM.NC));
             int currentPos = tetris.getCurrentBlock().getPosition().X;
@@ -268,7 +278,38 @@ namespace Tetris.Pages
             else if (pos.Y < (0.7 * ActualHeight))
             {
                 tickedEnd = false;
+            }*/
+
+            /* 3 X Positions for Kinect Horizontal Movement */
+            Point pos = e.HandPointer.GetPosition(this);
+            if (pos.X > ActualWidth * 0.7)
+                action = TetrisM.Actions.RIGHT;
+            else if (pos.X < ActualWidth * 0.3)
+                action = TetrisM.Actions.LEFT;
+            else
+                action = TetrisM.Actions.NONE;
+            
+            if ((pos.Y > (0.9 * ActualHeight)) && !tickedEnd)
+            {
+                tickedEnd = true;
+                tetris.moveCurrentBlock(TetrisM.Actions.F_DOWN);
+                moveDown = false;
             }
+            else if (pos.Y > (0.75 * ActualHeight)) {
+                moveDown = true;
+            } 
+            else if (pos.Y < (0.70 * ActualHeight))
+            {
+                moveDown = false;
+                tickedEnd = false;
+            }
+        }
+        public void onTimedEvent(object sender, EventArgs e) {
+            if (e != null)
+                tetris.moveCurrentBlock(action);
+
+            if (moveDown)
+                tetris.moveCurrentBlock(TetrisM.Actions.DOWN);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Tetris.TetrisModule
         public static int NR = 20;                                  /* Number of rows */
         public static int NC = 10;                                  /* Number of columns */
         public static Color emptyBlock = Colors.Transparent;        /* Default color */
-        public enum Actions { LEFT, DOWN, F_DOWN, RIGHT, ROTATE };     /* Available actions */
+        public enum Actions { NONE, LEFT, DOWN, F_DOWN, RIGHT, ROTATE };     /* Available actions */
         
         private static TetrisM instance;        /* Private and static instance -> Singleton implementation */
 
@@ -156,7 +156,7 @@ namespace Tetris.TetrisModule
         }
         public void moveCurrentBlock(Actions e, bool forced = false)    /* METHOD - Move current block */
         {
-            if (paused) return;                                 /* Doesn't allow any movements when paused */
+            if (paused || e == Actions.NONE) return;            /* Doesn't allow any movements when paused */
 
             if (checkCollisions(e, currentBlock))               /* Check for any colisions */
             {
@@ -307,6 +307,8 @@ namespace Tetris.TetrisModule
         }
         private bool checkCollisions(Actions direction, Block block)
         {
+            if (direction == Actions.NONE)
+                return false;
             Point2D[] list = block.getList();
             Point2D pos = block.getPosition();
             int x, y;

@@ -6,8 +6,8 @@
       Height="720"
 	  Title="MainPage">
     <Grid>
+        <k:KinectScrollViewer ContentMargin="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" >
             <Grid Background="White" k:KinectRegion.HandPointerGrip="HandPointerGrip" k:KinectRegion.HandPointerMove="HandPointerMove">
-                
                 <!-- TETRIS GRID - GAME GRID -->
                 <Label Content="2:00" Height="50" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Width="128" Margin="0,34,0,0" />
                 <Grid HorizontalAlignment="Center" Background="White" Name="MainGrid" Height="560" Width="280">
@@ -34,12 +34,12 @@
                         </Grid.RowDefinitions>
                     </Grid>
                 </Grid>
-                
+
                 <!-- PAUSE BUTTON -->
                 <k:KinectCircleButton Style="{StaticResource PauseButtonStyle}" Label="Pause" Height="175" Width="175" HorizontalAlignment="Right" Margin="50,50" Name="PauseButton" VerticalAlignment="Top" k:KinectCircleButton.Click="PauseButton_Click" BorderThickness="2" />
 
                 <!-- HIGHSCORES REGION -->
-                <Label Content="HIGHSCORES" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="139" Margin="948,240,172,0" />
+                <Label Content="HIGHSCORES" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="146" Margin="958,240,176,0" />
                 <DataGrid Padding="20" BorderBrush="Black" BorderThickness="1" LoadingRow="gridHighscores_LoadingRow" RowDetailsVisibilityMode="Collapsed" IsTabStop="False" HeadersVisibility="Row" Background="Transparent" IsHitTestVisible="False" GridLinesVisibility="None" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Top" Name="gridHighscores" Width="359" Height="357" Margin="838,282,62,0">
                     <DataGrid.RowHeaderStyle>
                         <Style TargetType="{x:Type DataGridRowHeader}">
@@ -52,6 +52,13 @@
                         </Style>
                     </DataGrid.CellStyle>
                 </DataGrid>
+                <Image Height="265" HorizontalAlignment="Left" Margin="85,118,0,0" Name="image1" Stretch="Uniform" VerticalAlignment="Top" Width="196" Source="/Tetris;component/Images/HandMoveArrow.png" />
+                <Image Height="264" HorizontalAlignment="Left" Margin="85,410,0,0" Name="image2" Stretch="Uniform" VerticalAlignment="Top" Width="196" Source="/Tetris;component/Images/HandGrip.png" />
+                <Image Height="171" HorizontalAlignment="Left" Margin="302,163,0,0" Name="image3" Stretch="Uniform" VerticalAlignment="Top" Width="159" Source="/Tetris;component/Images/TetriminoArrow.png" />
+                <Image Height="158" HorizontalAlignment="Left" Margin="311,465,0,0" Name="image4" Stretch="Uniform" VerticalAlignment="Top" Width="159" Source="/Tetris;component/Images/TetriminoRotate.png" />
+                <Label Content="Rodar" FontSize="20" FontWeight="Normal" Height="36" HorizontalAlignment="Center" Margin="352,429,857,0" VerticalAlignment="Top" Width="71" />
+                <Label Content="Movimento" FontSize="20" FontWeight="Normal" Height="36" HorizontalAlignment="Center" Margin="327,127,842,0" VerticalAlignment="Top" Width="111" />
             </Grid>
+        </k:KinectScrollViewer>
     </Grid>
 </Page>

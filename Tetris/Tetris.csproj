@@ -140,6 +140,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -157,7 +158,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
+    <Resource Include="Images\HandGrip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HandMoveArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TetriminoArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TetriminoRotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HandDownUp.png" />
+    <Resource Include="Images\HandLeftRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HandMove.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Tetris.TetrisModule.BlockModule
 {
-    public class Block
+    public abstract class Block
     {
         private Point2D pos;
         private Color blockColor;

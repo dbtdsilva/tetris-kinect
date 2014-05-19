@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tetris.TetrisModule;
+using System.Windows.Threading;
 
 namespace Tetris.Pages
 {
@@ -19,12 +20,23 @@ namespace Tetris.Pages
     /// </summary>
     public partial class GameOver : Page, IPopup
     {
+        DispatcherTimer delayPress = new DispatcherTimer();
         public GameOver(int finalscore)
         {
             InitializeComponent();
             score.Content = finalscore;
-        }
 
+            RestartButton.IsEnabled = false;
+
+            delayPress.Tick += new EventHandler(delayPressEvent);
+            delayPress.Interval = TimeSpan.FromMilliseconds(1000);     /* Delay submit for 3 seconds */
+            delayPress.Start();
+        }
+        public void delayPressEvent(object sender, EventArgs e)
+        {
+            delayPress.Stop();
+            RestartButton.IsEnabled = true;
+        }
         private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.exitPopup();

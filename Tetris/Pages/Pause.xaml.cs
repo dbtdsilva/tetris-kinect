@@ -14,18 +14,32 @@ using Tetris.TetrisModule;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using Microsoft.Kinect;
+using System.Windows.Threading;
 
 namespace Tetris.Pages
 {
     public partial class Pause : Page, IMainPage
     {
+        DispatcherTimer delaySubmit = new DispatcherTimer();
         public Pause()
         {
             MainWindow.Instance.changeSensorPosition(HorizontalAlignment.Center, VerticalAlignment.Top);
             InitializeComponent();
             changeButtonStatus(TetrisM.getInstance().getGBlockStatus());
-        }
 
+            restartButton.IsEnabled = false;
+            resumeButton.IsEnabled = false;
+
+            delaySubmit.Tick += new EventHandler(delaySubmitEvent);
+            delaySubmit.Interval = TimeSpan.FromMilliseconds(1000);     /* Delay submit for 3 seconds */
+            delaySubmit.Start();
+        }
+        public void delaySubmitEvent(object sender, EventArgs e)
+        {
+            delaySubmit.Stop();
+            restartButton.IsEnabled = true;
+            resumeButton.IsEnabled = true;
+        }
         private void resumeButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.restoreStart();
@@ -49,12 +63,12 @@ namespace Tetris.Pages
         private void changeButtonStatus(bool activate) {
             if (activate)
             {
-                ghostBlockButtonLabel.Content = "Deactivate";
+                ghostBlockButtonLabel.Content = "Desactivar";
                 ghostBlockButtonEllipse.Fill = new SolidColorBrush(Colors.Gray);
             }
             else
             {
-                ghostBlockButtonLabel.Content = "Activate";
+                ghostBlockButtonLabel.Content = "Activar";
                 ghostBlockButtonEllipse.Fill = new SolidColorBrush(Colors.White);
             }
         }

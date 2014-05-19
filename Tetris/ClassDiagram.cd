@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Tetris.App" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.MainWindow" Collapsed="true">
+    <Position X="12.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAhACAAAAEAAAABBAgAAgAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.Pages.GameOver" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACCAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Pages\GameOver.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tetris.Pages.GameOverHighscore" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="8.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIBAAAQAAAAAAAACAACCAAAAAAACAAAAiEEBAAAAAAA=</HashCode>
+      <FileName>Pages\GameOverHighscore.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tetris.Pages.MainPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FIIABFAgIAUAAAAAABACAiIAAAACQACICQABEkAAAAA=</HashCode>
+      <FileName>Pages\MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tetris.Pages.Pause" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAACACAAAAAAAAAAAAAAAAAAAgAABAAAAAAA=</HashCode>
+      <FileName>Pages\Pause.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tetris.Pages.StartPopup" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\StartPopup.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Tetris.Properties.Resources" Collapsed="true">
+    <Position X="15.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.Properties.Settings" Collapsed="true">
+    <Position X="15.5" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.Block">
+    <Position X="8.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIgAAAAgAAAAAAAAQAIACAIAAAAAAAAAAikAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\Block.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.BlockFactory">
+    <Position X="12" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\BlockFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.GhostBlock">
+    <Position X="11" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\GhostBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.SingularBlocks.BlockI">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\SingularBlocks\BlockI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.SingularBlocks.BlockJ">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\SingularBlocks\BlockJ.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.SingularBlocks.BlockL">
+    <Position X="6.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\SingularBlocks\BlockL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.SingularBlocks.BlockO">
+    <Position X="9" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\SingularBlocks\BlockO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.SingularBlocks.BlockS">
+    <Position X="13.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\SingularBlocks\BlockS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.SingularBlocks.BlockT">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\SingularBlocks\BlockT.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.BlockModule.SingularBlocks.BlockZ">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\BlockModule\SingularBlocks\BlockZ.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.Point2D">
+    <Position X="13" Y="9.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEQAEAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>TetrisModule\Point2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.HighScore">
+    <Position X="5.5" Y="9.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAgAAAgIgAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\Score\HighScore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.Score">
+    <Position X="9" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAgAAEAAAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TetrisModule\Score\Score.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tetris.TetrisModule.TetrisM">
+    <Position X="0.75" Y="0.5" Width="3.75" />
+    <NestedTypes>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.TableChangedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.HighscoresChangedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.RowCompleteEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.NextBlockChangedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.ScoreChangedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.BlockMovedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Enum Name="Tetris.TetrisModule.TetrisM.Actions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.GameEndEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.BlockRepaintEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.ClockTickEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Tetris.TetrisModule.TetrisM.PauseStatusEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TetrisModule\Tetris.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>iBAIAABrIICABIBgQCIKhQIEgIBFQFQEKAgIAARMLAA=</HashCode>
+      <FileName>TetrisModule\Tetris.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Controls.Page" Collapsed="true">
+    <Position X="10.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Tetris.Pages.IMainPage" Collapsed="true">
+    <Position X="8.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\PageInterfaces\IMainPage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Tetris.Pages.IPopup" Collapsed="true">
+    <Position X="6.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\PageInterfaces\IPopup.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
