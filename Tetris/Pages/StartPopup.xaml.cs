@@ -27,7 +27,7 @@ namespace Tetris.Pages
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            TetrisM.getInstance().startGame();
+            MainWindow.Instance.getMainPage().startGame();
             MainWindow.Instance.exitPopup();
         }
     }

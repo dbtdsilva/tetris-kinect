@@ -43,14 +43,13 @@ namespace Tetris.Pages
         private void resumeButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.restoreStart();
-            TetrisM.getInstance().pausePlay();
+            MainWindow.Instance.getMainPage().resumeGame();
         }
 
         private void restartButton_Click(object sender, RoutedEventArgs e)
         {
-
             MainWindow.Instance.restoreStart();
-            TetrisM.getInstance().startGame();
+            MainWindow.Instance.getMainPage().startGame();
         }
 
         private void ghostBlockButton_Click(object sender, RoutedEventArgs e)

@@ -42,6 +42,10 @@ namespace Tetris
             mainpage = new MainPage();
             restoreStart();
         }
+        public MainPage getMainPage()
+        {
+            return mainpage;
+        }
         public void changeFrame(IMainPage page)
         {
             this.mainFrame.Navigate(page);

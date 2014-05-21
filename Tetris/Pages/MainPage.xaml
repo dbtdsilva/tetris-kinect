@@ -12,7 +12,9 @@
                 <Label Content="2:00" Height="50" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Name="TimeLeft" VerticalAlignment="Top" FontSize="26" Width="128" Margin="0,34,0,0" />
                 <Grid HorizontalAlignment="Center" Background="White" Name="MainGrid" Height="560" Width="280">
                     <UniformGrid Margin="1" Name="TetrisGridBack"/>
-                    <UniformGrid Margin="1" Name="TetrisGrid" />
+                    <UniformGrid Margin="1" Name="TetrisGrid">
+                    </UniformGrid>
+                    <Label Name="ReadyTimeout" Content="3" Height="474" Width="141" FontSize="250" Visibility="Hidden" />
                 </Grid>
                 <Label Content="SCORE" Height="37" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="35" FontWeight="Bold" FontSize="20" />
                 <Label Content="0" Height="37" HorizontalAlignment="Center" Name="score" VerticalAlignment="Bottom" Margin="5" FontSize="18" FontWeight="Bold" />
@@ -56,8 +58,27 @@
                 <Image Height="264" HorizontalAlignment="Left" Margin="85,410,0,0" Name="image2" Stretch="Uniform" VerticalAlignment="Top" Width="196" Source="/Tetris;component/Images/HandGrip.png" />
                 <Image Height="171" HorizontalAlignment="Left" Margin="302,163,0,0" Name="image3" Stretch="Uniform" VerticalAlignment="Top" Width="159" Source="/Tetris;component/Images/TetriminoArrow.png" />
                 <Image Height="158" HorizontalAlignment="Left" Margin="311,465,0,0" Name="image4" Stretch="Uniform" VerticalAlignment="Top" Width="159" Source="/Tetris;component/Images/TetriminoRotate.png" />
-                <Label Content="Rodar" FontSize="20" FontWeight="Normal" Height="36" HorizontalAlignment="Center" Margin="352,429,857,0" VerticalAlignment="Top" Width="71" />
-                <Label Content="Movimento" FontSize="20" FontWeight="Normal" Height="36" HorizontalAlignment="Center" Margin="327,127,842,0" VerticalAlignment="Top" Width="111" />
+                <Label Content="Rotate" FontSize="25" FontWeight="SemiBold" Height="41" HorizontalAlignment="Center" Margin="342,427,854,0" VerticalAlignment="Top" Width="84" />
+                <Label Content="Movement" FontSize="25" FontWeight="SemiBold" Height="36" HorizontalAlignment="Center" Margin="317,127,831,0" VerticalAlignment="Top" Width="132" />
+
+                <Path Name="ArrowLeft" Height="48" Canvas.Left="0" Stretch="Uniform" Canvas.Top="0" Width="48" x:Shared="False" Data="{StaticResource LeftFacingArrowGeometry}" Stroke="Green" Fill="Gray" Opacity="0" Margin="576,175,656,497">
+                    <Path.RenderTransformOrigin>0.5,0.5</Path.RenderTransformOrigin>
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="0" />
+                    </Path.RenderTransform>
+                </Path>
+                <Path Name="ArrowRight" Height="48" Canvas.Left="0" Stretch="Uniform" Canvas.Top="0" Width="48" x:Shared="False" Data="{StaticResource LeftFacingArrowGeometry}" Stroke="Green" Fill="Gray" Opacity="0" Margin="659,175,573,497">
+                    <Path.RenderTransformOrigin>0.5,0.5</Path.RenderTransformOrigin>
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="180" />
+                    </Path.RenderTransform>
+                </Path>
+                <Path Name="ArrowDown" Height="48" Canvas.Left="0" Stretch="Uniform" Canvas.Top="0" Width="48" x:Shared="False" Data="{StaticResource LeftFacingArrowGeometry}" Stroke="Green" Fill="Gray" Opacity="0" Margin="616,217,616,455">
+                    <Path.RenderTransformOrigin>0.5,0.5</Path.RenderTransformOrigin>
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="270" />
+                    </Path.RenderTransform>
+                </Path>
             </Grid>
         </k:KinectScrollViewer>
     </Grid>

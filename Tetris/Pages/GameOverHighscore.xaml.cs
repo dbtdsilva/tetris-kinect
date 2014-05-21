@@ -36,7 +36,7 @@ namespace Tetris.Pages
             InitializeComponent();
 
             Submit.IsEnabled = false;
-
+            CloseButton.IsEnabled = false;
             delaySubmit.Tick += new EventHandler(delaySubmitEvent);
             delaySubmit.Interval = TimeSpan.FromMilliseconds(3000);     /* Delay submit for 3 seconds */
             delaySubmit.Start();
@@ -53,11 +53,19 @@ namespace Tetris.Pages
         public void delaySubmitEvent(object sender, EventArgs e)
         {
             delaySubmit.Stop();
+            CloseButton.IsEnabled = true;
             Submit.IsEnabled = true;
         }
         private void Kinect_HandPointerGrip(object sender, HandPointerEventArgs e)
         {
-            onSubmit(sender, e);
+            //onSubmit(sender, e);
+        }
+        private void onClose(object sender, RoutedEventArgs e)
+        {
+            StartPopup page = new StartPopup();
+            MainWindow.Instance.popPage(page);
+            MainWindow.Instance.KeyDown -= new KeyEventHandler(Key_Down);
+            e.Handled = true;
         }
         private void onSubmit(object sender, RoutedEventArgs e)
         {
@@ -81,11 +89,13 @@ namespace Tetris.Pages
         }
         private void changeLetter(int new_index) {
             TextBlock letter = (TextBlock)VisualTreeHelper.GetChild(lettersGrid, activeIndex);
-            letter.Foreground = new SolidColorBrush(Colors.Black);
+            letter.Foreground = new SolidColorBrush(Colors.DimGray);
+            letter.Background = new SolidColorBrush(Colors.WhiteSmoke);
 
             activeIndex = new_index;
             letter = (TextBlock)VisualTreeHelper.GetChild(lettersGrid, new_index);
-            letter.Foreground = new SolidColorBrush(Colors.White);
+            letter.Foreground = new SolidColorBrush(Colors.Black);
+            letter.Background = new SolidColorBrush(Colors.DarkGray);
         }
         private void Key_Down(object sender, KeyEventArgs e)
         {   
@@ -140,9 +150,9 @@ namespace Tetris.Pages
                 else
                     keyBlock = Key.None;
 
-                if (pos.Y > (0.75 * ActualHeight))
+                if (pos.Y > (0.80 * ActualHeight))
                     keyLetter = Key.Down;
-                else if (pos.Y < (0.25 * ActualHeight))
+                else if (pos.Y < (0.20 * ActualHeight))
                     keyLetter = Key.Up;
                 else
                     keyLetter = Key.None;

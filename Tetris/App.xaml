@@ -62,5 +62,7 @@
         <Style x:Key="RestartButtonStyle" TargetType="k:KinectCircleButton">
             <Setter Property="Content" Value="{StaticResource RestartGlyph}"/>
         </Style>
+        <PathGeometry x:Key="LeftFacingArrowGeometry"> M182.5703,143.3564L182.5703,155.3564L142.5703,155.3564C148.2363,161.3564,153.9043,167.3564,159.5703,173.3564L143.5703,173.3564L120.4803,149.3564L144.5703,125.3564L160.7373,125.3564L142.5703,143.3564z
+        </PathGeometry>
     </Application.Resources>
 </Application>

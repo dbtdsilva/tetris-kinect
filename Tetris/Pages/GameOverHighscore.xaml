@@ -12,17 +12,19 @@
             <Label HorizontalAlignment="Center" Content="New highscore!" FontSize="20" Margin="268,55,260,228" Width="152" />
             <Label HorizontalAlignment="Center" Name="score" Content="0" FontSize="20" Margin="430,117,234,329" Width="192" />
             <Label HorizontalAlignment="Center" Content="Score: " FontSize="20" Margin="356,117,432,329" />
-            <Ellipse Fill="White" Height="90" Width="90" Margin="0, -45" VerticalAlignment="Bottom"></Ellipse>
-            <k:KinectCircleButton k:KinectCircleButton.Click="onSubmit" Height="158" Width="158" LabelPosition="None" HorizontalAlignment="Center" Name="Submit" VerticalAlignment="Bottom" Margin="0,-79" Content="OK" />
+            <Ellipse Fill="White" Height="90" Width="90" Margin="345,0,345,-45" VerticalAlignment="Bottom"></Ellipse>
+            <k:KinectCircleButton k:KinectCircleButton.Click="onSubmit" Height="158" Width="158" LabelPosition="None" HorizontalAlignment="Center" Name="Submit" VerticalAlignment="Bottom" Margin="311,0,311,-79" Content="OK" />
             <Grid HorizontalAlignment="Center" Name="lettersGrid" Margin="150,85,150,50" Width="387">
-                <TextBlock Name="letter1" Background="LightGray" FontFamily="Segoe UI" FontSize="50" Height="76" HorizontalAlignment="Center" Text="A" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="87" Margin="26,0,274,0" />
-                <TextBlock Name="letter2" Background="LightGray" FontFamily="Segoe UI" FontSize="50" Height="76" HorizontalAlignment="Center" Text="A" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="87" />
-                <TextBlock Name="letter3" Background="LightGray" FontFamily="Segoe UI" FontSize="50" Height="76" HorizontalAlignment="Center" Text="A" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="87" Margin="274,0,26,0" />
+                <TextBlock Padding="5" Name="letter1" Background="WhiteSmoke" Foreground="DimGray" FontFamily="Segoe UI" FontSize="50" Height="76" HorizontalAlignment="Center" Text="A" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="87" Margin="26,0,274,0" />
+                <TextBlock Name="letter2" Background="WhiteSmoke" Foreground="DimGray" FontFamily="Segoe UI" FontSize="50" Height="76" HorizontalAlignment="Center" Text="A" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="87" />
+                <TextBlock Name="letter3" Background="WhiteSmoke" Foreground="DimGray" FontFamily="Segoe UI" FontSize="50" Height="76" HorizontalAlignment="Center" Text="A" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="87" Margin="274,0,26,0" />
             </Grid>
             <Image Height="233" Margin="604,80,18,0" Name="image1" Stretch="Uniform" VerticalAlignment="Top" Source="/Tetris;component/Images/HandLeftRight.png" />
             <Image Height="234" HorizontalAlignment="Left" Margin="22,80,0,0" Name="image2" Stretch="Uniform" VerticalAlignment="Top" Width="159" Source="/Tetris;component/Images/HandDownUp.png" />
-            <TextBlock Height="70" HorizontalAlignment="Right" Margin="0,11,18,0" Name="textBlock1" Text="Mover para a direita ou esquerda para mudar o bloco" VerticalAlignment="Top" Width="158" FontSize="16" TextWrapping="Wrap" TextAlignment="Center" />
-            <TextBlock FontSize="16" Height="70" HorizontalAlignment="Left" Margin="22,11,0,0" Name="textBlock3" Text="Mover para cima ou baixo para percorrer o alfabeto" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" />
+            <TextBlock Height="53" HorizontalAlignment="Right" Margin="0,0,18,239" Name="textBlock1" Text="Change letter block" VerticalAlignment="Bottom" Width="158" FontSize="20" TextWrapping="Wrap" TextAlignment="Center" />
+            <TextBlock FontSize="20" Height="30" HorizontalAlignment="Left" Margin="22,51,0,0" Name="textBlock3" Text="Change letter" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" />
         </Grid>
+        <Ellipse Fill="White" Height="90" Margin="977,0,213,480" VerticalAlignment="Bottom" Width="90" />
+        <k:KinectCircleButton Content="X" Height="158" HorizontalAlignment="Center" LabelPosition="None" Margin="943,0,179,446" Name="CloseButton" VerticalAlignment="Bottom" Width="158" k:KinectCircleButton.Click="onClose" />
     </Grid>
 </Page>

@@ -28,8 +28,10 @@ namespace Tetris.Pages
         private TetrisM tetris = TetrisM.getInstance();
         private bool tickedEnd = true;
         private bool moveDown = false;
+        private static double kinectArrowsOpacity = 0.8;
         DispatcherTimer kinectSmoothMovement = new DispatcherTimer();
-
+        DispatcherTimer startTimer = new DispatcherTimer();
+        private int timeLeftToStart;
         private int timeBetweenShiftsMilliseconds = 650;
 
         TetrisM.Actions action;
@@ -40,6 +42,10 @@ namespace Tetris.Pages
             kinectSmoothMovement.Tick += new EventHandler(onTimedEvent);
             kinectSmoothMovement.Interval = TimeSpan.FromMilliseconds(timeBetweenShiftsMilliseconds);
             kinectSmoothMovement.Start();
+
+            startTimer.Tick += new EventHandler(startTick);
+            startTimer.Interval = TimeSpan.FromMilliseconds(1000);
+
             // Events related with Tetris Module
             tetris.blockPaint += new TetrisM.BlockRepaintEventHandler(blockPaintEvent);
             tetris.blockMoved += new TetrisM.BlockMovedEventHandler(blockMovedEvent);
@@ -58,6 +64,25 @@ namespace Tetris.Pages
 
             StartPopup page = new StartPopup();
             MainWindow.Instance.popPage(page);
+        }
+        public void startGame()
+        {
+            paintGrid(true);
+            timeLeftToStart = 3;
+            ReadyTimeout.Content = timeLeftToStart;
+            ReadyTimeout.Visibility = System.Windows.Visibility.Visible;
+            startTimer.Start();
+
+        }
+        public void startTick(object sender, EventArgs e)
+        {
+            if (--timeLeftToStart == 0)
+            {
+                tetris.startGame();
+                startTimer.Stop();
+                ReadyTimeout.Visibility = System.Windows.Visibility.Hidden;
+            }
+            ReadyTimeout.Content = timeLeftToStart;
         }
         private void gridHighscores_LoadingRow(object sender, DataGridRowEventArgs e)
         {
@@ -139,14 +164,14 @@ namespace Tetris.Pages
                 }
             }
         }
-        private void paintGrid()
+        private void paintGrid(bool clearGrid = false)
         {
             Color[,] table = tetris.getTable();
             for (int i = 0; i < TetrisM.NC; i++)
             {
                 for (int j = 0; j < TetrisM.NR; j++)
                 {
-                    tetrisTable[i, j].Fill = new SolidColorBrush(table[i, j]);
+                    tetrisTable[i, j].Fill = clearGrid ? new SolidColorBrush(TetrisM.emptyBlock) : new SolidColorBrush(table[i, j]);
                 }
             }
         }
@@ -216,9 +241,13 @@ namespace Tetris.Pages
         public void pauseStatusChanged(bool pause)
         {
             if (pause)
+            {
                 MainWindow.Instance.KeyDown -= new KeyEventHandler(onKeyDown);
+            }
             else
+            {
                 MainWindow.Instance.KeyDown += new KeyEventHandler(onKeyDown);
+            }
         }
         public void gameEnded(int finalscore)
         {
@@ -235,9 +264,19 @@ namespace Tetris.Pages
                 MainWindow.Instance.popPage(gameover);
             }
         }
+        public void resumeGame()
+        {
+            if (timeLeftToStart != 0)
+                startTimer.Start();
+            else
+                tetris.pausePlay();
+        }
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            tetris.pausePlay();
+            if (!startTimer.IsEnabled)
+                tetris.pausePlay();
+            else
+                startTimer.Stop();
             Pause pause = new Pause();
             MainWindow.Instance.mainFrame.Navigate(pause);
         }
@@ -303,6 +342,22 @@ namespace Tetris.Pages
                 moveDown = false;
                 tickedEnd = false;
             }
+            drawMovement(action, moveDown);
+        }
+        private void drawMovement(TetrisM.Actions rightLeft, bool movingDown)
+        {
+            if (rightLeft == TetrisM.Actions.LEFT) {
+                ArrowLeft.Opacity = kinectArrowsOpacity;
+                ArrowRight.Opacity = 0;
+            } else if (rightLeft == TetrisM.Actions.RIGHT) {
+                ArrowLeft.Opacity = 0;
+                ArrowRight.Opacity = kinectArrowsOpacity;
+            } else {
+                ArrowLeft.Opacity = 0;
+                ArrowRight.Opacity = 0;
+            }
+
+            ArrowDown.Opacity = moveDown ? kinectArrowsOpacity : 0;
         }
         public void onTimedEvent(object sender, EventArgs e) {
             if (e != null)

@@ -40,7 +40,7 @@ namespace Tetris.Pages
         private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.exitPopup();
-            TetrisM.getInstance().startGame();
+            MainWindow.Instance.getMainPage().startGame();
         }
     }
 }
