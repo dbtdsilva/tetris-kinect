@@ -44,7 +44,7 @@ namespace Tetris.Pages
             kinectSmoothLeftRight.Start();
 
             kinectSmoothDown.Tick += new EventHandler(timerTriggerDown);
-            kinectSmoothDown.Interval = TimeSpan.FromMilliseconds(250);
+            kinectSmoothDown.Interval = TimeSpan.FromMilliseconds(350);
             kinectSmoothDown.Start();
 
             startTimer.Tick += new EventHandler(startTick);
@@ -297,7 +297,7 @@ namespace Tetris.Pages
             else
                 action = TetrisM.Actions.NONE;
             
-            if ((pos.Y > (0.95 * ActualHeight)) && !tickedEnd)
+            if ((pos.Y > (0.90 * ActualHeight)) && !tickedEnd)
             {
                 tickedEnd = true;
                 tetris.moveCurrentBlock(TetrisM.Actions.F_DOWN);
@@ -306,7 +306,7 @@ namespace Tetris.Pages
             else if (pos.Y > (0.65 * ActualHeight)) {
                 moveDown = true;
             } 
-            else if (pos.Y < (0.6 * ActualHeight))
+            else
             {
                 moveDown = false;
                 tickedEnd = false;

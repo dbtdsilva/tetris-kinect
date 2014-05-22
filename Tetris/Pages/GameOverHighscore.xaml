@@ -10,8 +10,8 @@
         <Grid Background="White" Margin="250,200" >
             <Label HorizontalAlignment="Center" Name="gameover_label" Content="Game Over" FontSize="36" />
             <Label HorizontalAlignment="Center" Content="New highscore!" FontSize="20" Margin="268,55,260,228" Width="152" />
-            <Label HorizontalAlignment="Center" Name="score" Content="0" FontSize="20" Margin="430,117,234,329" Width="192" />
-            <Label HorizontalAlignment="Center" Content="Score: " FontSize="20" Margin="356,117,432,329" />
+            <Label HorizontalAlignment="Center" Name="score" Content="0" FontSize="20" Margin="395,87,256,195" Width="129" />
+            <Label HorizontalAlignment="Center" Content="Score: " FontSize="20" Margin="332,86,385,196" Width="63" />
             <Ellipse Fill="White" Height="90" Width="90" Margin="345,0,345,-45" VerticalAlignment="Bottom"></Ellipse>
             <k:KinectCircleButton k:KinectCircleButton.Click="onSubmit" Height="158" Width="158" LabelPosition="None" HorizontalAlignment="Center" Name="Submit" VerticalAlignment="Bottom" Margin="311,0,311,-79" Content="OK" />
             <Grid HorizontalAlignment="Center" Name="lettersGrid" Margin="150,85,150,50" Width="387">
