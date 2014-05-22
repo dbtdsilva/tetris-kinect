@@ -29,19 +29,23 @@ namespace Tetris.Pages
         private bool tickedEnd = true;
         private bool moveDown = false;
         private static double kinectArrowsOpacity = 0.8;
-        DispatcherTimer kinectSmoothMovement = new DispatcherTimer();
+        DispatcherTimer kinectSmoothLeftRight = new DispatcherTimer();
+        DispatcherTimer kinectSmoothDown = new DispatcherTimer();
         DispatcherTimer startTimer = new DispatcherTimer();
         private int timeLeftToStart;
-        private int timeBetweenShiftsMilliseconds = 650;
 
         TetrisM.Actions action;
         public MainPage()
         {
             InitializeComponent();
 
-            kinectSmoothMovement.Tick += new EventHandler(onTimedEvent);
-            kinectSmoothMovement.Interval = TimeSpan.FromMilliseconds(timeBetweenShiftsMilliseconds);
-            kinectSmoothMovement.Start();
+            kinectSmoothLeftRight.Tick += new EventHandler(timerTriggerLeftRight);
+            kinectSmoothLeftRight.Interval = TimeSpan.FromMilliseconds(500);
+            kinectSmoothLeftRight.Start();
+
+            kinectSmoothDown.Tick += new EventHandler(timerTriggerDown);
+            kinectSmoothDown.Interval = TimeSpan.FromMilliseconds(250);
+            kinectSmoothDown.Start();
 
             startTimer.Tick += new EventHandler(startTick);
             startTimer.Interval = TimeSpan.FromMilliseconds(1000);
@@ -251,9 +255,7 @@ namespace Tetris.Pages
         }
         public void gameEnded(int finalscore)
         {
-            /**** UNCOMMENT THIS AFTER SYSTEM GOES LIVE ****
-             * if (tetris.getHighscores().isHighscore(finalscore) && KinectSensor.KinectSensors.Count != 0) */
-            if (tetris.getHighscores().isHighscore(finalscore))
+            if (tetris.getHighscores().isHighscore(finalscore) && KinectSensor.KinectSensors.Count != 0)
             {
                 GameOverHighscore submitPanel = new GameOverHighscore(finalscore);
                 MainWindow.Instance.popPage(submitPanel);
@@ -286,58 +288,25 @@ namespace Tetris.Pages
         }
         private void HandPointerMove(object sender, HandPointerEventArgs e)
         {
-            /* 10 X positions for Kinect Horizontal Movement */
-            /*Point pos = e.HandPointer.GetPosition(this);
-
-            int newpos = (int)(pos.X / (ActualWidth / TetrisM.NC));
-            int currentPos = tetris.getCurrentBlock().getPosition().X;
-            if (newpos != currentPos)
-            {
-                if (newpos > currentPos)
-                {
-                    for (int i = 0; i < (newpos - currentPos); i++)
-                    {
-                        tetris.moveCurrentBlock(TetrisM.Actions.RIGHT);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < (currentPos - newpos); i++)
-                    {
-                        tetris.moveCurrentBlock(TetrisM.Actions.LEFT);
-                    }
-                }
-                currentPos = newpos;
-            }
-            if ((pos.Y > (0.9 * ActualHeight)) && !tickedEnd)
-            {
-                tickedEnd = true;
-                tetris.moveCurrentBlock(TetrisM.Actions.F_DOWN);
-            }
-            else if (pos.Y < (0.7 * ActualHeight))
-            {
-                tickedEnd = false;
-            }*/
-
             /* 3 X Positions for Kinect Horizontal Movement */
             Point pos = e.HandPointer.GetPosition(this);
-            if (pos.X > ActualWidth * 0.7)
+            if (pos.X > ActualWidth * 0.65)
                 action = TetrisM.Actions.RIGHT;
-            else if (pos.X < ActualWidth * 0.3)
+            else if (pos.X < ActualWidth * 0.35)
                 action = TetrisM.Actions.LEFT;
             else
                 action = TetrisM.Actions.NONE;
             
-            if ((pos.Y > (0.9 * ActualHeight)) && !tickedEnd)
+            if ((pos.Y > (0.95 * ActualHeight)) && !tickedEnd)
             {
                 tickedEnd = true;
                 tetris.moveCurrentBlock(TetrisM.Actions.F_DOWN);
                 moveDown = false;
             }
-            else if (pos.Y > (0.75 * ActualHeight)) {
+            else if (pos.Y > (0.65 * ActualHeight)) {
                 moveDown = true;
             } 
-            else if (pos.Y < (0.70 * ActualHeight))
+            else if (pos.Y < (0.6 * ActualHeight))
             {
                 moveDown = false;
                 tickedEnd = false;
@@ -359,10 +328,13 @@ namespace Tetris.Pages
 
             ArrowDown.Opacity = moveDown ? kinectArrowsOpacity : 0;
         }
-        public void onTimedEvent(object sender, EventArgs e) {
+        public void timerTriggerLeftRight(object sender, EventArgs e)
+        {
             if (e != null)
                 tetris.moveCurrentBlock(action);
-
+        }
+        public void timerTriggerDown(object sender, EventArgs e)
+        {
             if (moveDown)
                 tetris.moveCurrentBlock(TetrisM.Actions.DOWN);
         }

@@ -150,7 +150,7 @@ namespace Tetris.Pages
                 else
                     keyBlock = Key.None;
 
-                if (pos.Y > (0.80 * ActualHeight))
+                if (pos.Y > (0.85 * ActualHeight))
                     keyLetter = Key.Down;
                 else if (pos.Y < (0.20 * ActualHeight))
                     keyLetter = Key.Up;
