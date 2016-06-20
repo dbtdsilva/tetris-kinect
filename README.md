@@ -1,4 +1,4 @@
-DETI-Tetris
+DETI Tetris
 ===========
 This project was created to check the possibility to play Tetris with a Kinect.
 
@@ -7,3 +7,5 @@ It might have been an experiment but this game is pretty playable using gestures
 
 It was implemented using Visual Studio 2010 using Kinect SDK.
 If you want to check the result of this project, all you need to do is install Visual Studio 2010 (or higher) and run the project.
+
+If you're having problems running this project, feel free to send me a message.
